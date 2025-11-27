@@ -211,7 +211,7 @@ export default function PublicPage() {
                   {isEn ? way.titleEn : way.titleBn}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-gray-600">{isEn ? way.descEn : way.descBn}</p>
-                <Link href={way.href} className="mt-6">
+                <Link to={way.href} className="mt-6">
                   <Button
                     variant="outline"
                     className="w-full border-emerald-600/30 text-emerald-700 hover:bg-emerald-50 bg-transparent"
@@ -243,7 +243,7 @@ export default function PublicPage() {
             {learnTopics.map((topic, index) => (
               <Link
                 key={index}
-                href={topic.href}
+                to={topic.href}
                 className="group flex items-start gap-4 rounded-2xl border border-emerald-100 bg-emerald-50 p-6 transition-all hover:border-amber-200 hover:shadow-lg"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 transition-colors group-hover:bg-amber-100">
@@ -311,19 +311,19 @@ export default function PublicPage() {
               <ul className="mt-8 space-y-4">
                 {(isEn
                   ? [
-                      "Fund development of free tools for farmers",
-                      "Train agricultural extension workers",
-                      "Expand weather alert coverage",
-                      "Support research on local storage solutions",
-                      "Create educational content in Bengali",
-                    ]
+                    "Fund development of free tools for farmers",
+                    "Train agricultural extension workers",
+                    "Expand weather alert coverage",
+                    "Support research on local storage solutions",
+                    "Create educational content in Bengali",
+                  ]
                   : [
-                      "কৃষকদের জন্য বিনামূল্যে সরঞ্জাম উন্নয়নে অর্থায়ন",
-                      "কৃষি সম্প্রসারণ কর্মীদের প্রশিক্ষণ দিন",
-                      "আবহাওয়া সতর্কতা কভারেজ প্রসারিত করুন",
-                      "স্থানীয় সংরক্ষণ সমাধান গবেষণা সমর্থন",
-                      "বাংলায় শিক্ষামূলক বিষয়বস্তু তৈরি করুন",
-                    ]
+                    "কৃষকদের জন্য বিনামূল্যে সরঞ্জাম উন্নয়নে অর্থায়ন",
+                    "কৃষি সম্প্রসারণ কর্মীদের প্রশিক্ষণ দিন",
+                    "আবহাওয়া সতর্কতা কভারেজ প্রসারিত করুন",
+                    "স্থানীয় সংরক্ষণ সমাধান গবেষণা সমর্থন",
+                    "বাংলায় শিক্ষামূলক বিষয়বস্তু তৈরি করুন",
+                  ]
                 ).map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />

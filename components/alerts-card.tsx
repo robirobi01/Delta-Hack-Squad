@@ -1,43 +1,60 @@
+"use client"
+
 import { AlertTriangle, CheckCircle, Info, Bell } from "lucide-react"
+import { useLanguage } from "@/lib/language-context"
 
 const alerts = [
   {
     type: "warning",
     icon: AlertTriangle,
-    title: "Heavy Rain Warning",
-    message: "Heavy rainfall expected Thursday. Secure stored grains.",
-    time: "2 hours ago",
+    titleEn: "Heavy Rain Warning",
+    titleBn: "ভারী বৃষ্টির সতর্কতা",
+    messageEn: "Heavy rainfall expected Thursday. Secure stored grains.",
+    messageBn: "বৃহস্পতিবার ভারী বৃষ্টি প্রত্যাশিত। সংরক্ষিত শস্য সুরক্ষিত করুন।",
+    timeEn: "2 hours ago",
+    timeBn: "২ ঘণ্টা আগে",
   },
   {
     type: "info",
     icon: Info,
-    title: "Market Update",
-    message: "Rice prices up 5% in Dhaka wholesale markets.",
-    time: "5 hours ago",
+    titleEn: "Market Update",
+    titleBn: "বাজার আপডেট",
+    messageEn: "Rice prices up 5% in Dhaka wholesale markets.",
+    messageBn: "ঢাকার পাইকারি বাজারে ধানের দাম ৫% বেড়েছে।",
+    timeEn: "5 hours ago",
+    timeBn: "৫ ঘণ্টা আগে",
   },
   {
     type: "success",
     icon: CheckCircle,
-    title: "Drying Complete",
-    message: "Optimal drying conditions for next 3 days.",
-    time: "1 day ago",
+    titleEn: "Drying Complete",
+    titleBn: "শুকানো সম্পূর্ণ",
+    messageEn: "Optimal drying conditions for next 3 days.",
+    messageBn: "পরবর্তী ৩ দিনের জন্য সর্বোত্তম শুকানোর অবস্থা।",
+    timeEn: "1 day ago",
+    timeBn: "১ দিন আগে",
   },
 ]
 
 const typeStyles = {
-  warning: "border-[#E8A838] bg-[#E8A838]/10 text-[#E8A838]",
+  warning: "border-amber-500 bg-amber-50 text-amber-600",
   info: "border-blue-500 bg-blue-50 text-blue-500",
-  success: "border-[#2D5016] bg-[#2D5016]/10 text-[#2D5016]",
+  success: "border-emerald-500 bg-emerald-50 text-emerald-600",
 }
 
 export function AlertsCard() {
+  const { language } = useLanguage()
+  const isEn = language === "en"
+
   return (
-    <div className="rounded-2xl border border-[#2D5016]/10 bg-white p-6">
+    <div className="rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="font-serif text-lg font-semibold text-[#2D5016]">Recent Alerts</h3>
+        <h3 className="font-serif text-lg font-semibold text-emerald-800">
+          {isEn ? "Recent Alerts" : "সাম্প্রতিক সতর্কতা"}
+        </h3>
         <div className="relative">
-          <Bell className="h-5 w-5 text-[#8B7355]" />
-          <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#E8A838] text-[10px] font-bold text-white">
+          <Bell className="h-5 w-5 text-gray-500" />
+          <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-white">
             3
           </span>
         </div>
@@ -50,9 +67,9 @@ export function AlertsCard() {
           >
             <alert.icon className="mt-0.5 h-5 w-5 shrink-0" />
             <div className="flex-1">
-              <p className="text-sm font-medium text-[#2D5016]">{alert.title}</p>
-              <p className="text-xs text-[#8B7355]">{alert.message}</p>
-              <p className="mt-1 text-xs text-[#8B7355]/70">{alert.time}</p>
+              <p className="text-sm font-medium text-emerald-800">{isEn ? alert.titleEn : alert.titleBn}</p>
+              <p className="text-xs text-gray-600">{isEn ? alert.messageEn : alert.messageBn}</p>
+              <p className="mt-1 text-xs text-gray-400">{isEn ? alert.timeEn : alert.timeBn}</p>
             </div>
           </div>
         ))}

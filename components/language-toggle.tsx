@@ -13,13 +13,13 @@ export function LanguageToggle() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="flex items-center gap-2 border-emerald-600/20 bg-white/80 text-emerald-800 hover:bg-emerald-50 backdrop-blur-sm"
+      className="flex items-center gap-2 text-white/70 hover:text-white hover:bg-white/10 rounded-full"
     >
       <Globe className="h-4 w-4" />
-      <span className="font-medium">{t("lang.switch")}</span>
+      <span className="font-medium text-sm">{t("lang.switch")}</span>
     </Button>
   )
 }

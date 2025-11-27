@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/section-header"
 import { Target, Eye, Heart, Users, Globe, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
-import Image from "@/components/image"
+
 
 const values = [
     {

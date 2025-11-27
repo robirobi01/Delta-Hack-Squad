@@ -104,7 +104,7 @@ export default function DashboardPage() {
           {quickActions.map((action, index) => (
             <Link
               key={index}
-              href={action.href}
+              to={action.href}
               className="group flex items-center gap-4 rounded-xl border border-emerald-100 bg-white p-4 shadow-sm transition-all hover:shadow-md"
             >
               <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${action.color}`}>

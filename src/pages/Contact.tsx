@@ -255,21 +255,21 @@ export default function ContactPage() {
                   </p>
                   <div className="flex gap-3">
                     <a
-                      to="#"
+                      href="#"
                       className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-colors hover:bg-amber-500 hover:text-white"
                       aria-label="Facebook"
                     >
                       <Facebook className="h-5 w-5" />
                     </a>
                     <a
-                      to="#"
+                      href="#"
                       className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-colors hover:bg-amber-500 hover:text-white"
                       aria-label="Twitter"
                     >
                       <Twitter className="h-5 w-5" />
                     </a>
                     <a
-                      to="#"
+                      href="#"
                       className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 transition-colors hover:bg-amber-500 hover:text-white"
                       aria-label="LinkedIn"
                     >

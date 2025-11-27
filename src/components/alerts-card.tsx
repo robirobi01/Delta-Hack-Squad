@@ -1,4 +1,4 @@
-"use client"
+
 
 import { AlertTriangle, CheckCircle, Info, Bell } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"

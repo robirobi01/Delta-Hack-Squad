@@ -1,6 +1,4 @@
-"use client"
-
-import Link from "next/link"
+import { Link } from "react-router-dom"
 import { Sprout, Facebook, Twitter, Linkedin, Mail, Phone, MapPin, Youtube } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
 
@@ -29,7 +27,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600">
                 <Sprout className="h-5 w-5 text-white" />
               </div>
@@ -59,7 +57,7 @@ export function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-emerald-100/70 transition-colors hover:text-amber-400">
+                  <Link to={link.href} className="text-sm text-emerald-100/70 transition-colors hover:text-amber-400">
                     {t(link.labelKey)}
                   </Link>
                 </li>
@@ -73,7 +71,7 @@ export function Footer() {
             <ul className="space-y-2">
               {resourceLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-emerald-100/70 transition-colors hover:text-amber-400">
+                  <Link to={link.href} className="text-sm text-emerald-100/70 transition-colors hover:text-amber-400">
                     {t(link.labelKey)}
                   </Link>
                 </li>

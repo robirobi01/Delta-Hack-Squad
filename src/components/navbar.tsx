@@ -1,8 +1,6 @@
-"use client"
-
-import Link from "next/link"
+import { Link, useLocation } from "react-router-dom"
 import { useState } from "react"
-import { Menu, X, Sprout, Search } from "lucide-react"
+import { Menu, X, Sprout } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LanguageToggle } from "@/components/language-toggle"
 import { useLanguage } from "@/lib/language-context"
@@ -24,12 +22,21 @@ const navLinks = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { t } = useLanguage()
+  const location = useLocation()
+
+  // Check if a link is active
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return location.pathname === "/"
+    }
+    return location.pathname.startsWith(href)
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#1a1a1a]">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-lime-500">
             <Sprout className="h-5 w-5 text-white" />
           </div>
@@ -38,13 +45,13 @@ export function Navbar() {
 
         {/* Desktop Navigation - centered */}
         <div className="hidden items-center gap-1 lg:flex">
-          {navLinks.slice(0, 6).map((link, index) => (
+          {navLinks.slice(0, 6).map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               className={cn(
                 "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                index === 0 ? "bg-white/10 text-white" : "text-white/70 hover:text-white",
+                isActive(link.href) ? "bg-white/10 text-white" : "text-white/70 hover:text-white",
               )}
             >
               {t(link.labelKey)}
@@ -55,17 +62,11 @@ export function Navbar() {
         {/* Desktop Right Actions */}
         <div className="hidden items-center gap-2 lg:flex">
           <LanguageToggle />
-          <button className="p-2 text-white/70 hover:text-white transition-colors">
-            <Search className="h-5 w-5" />
-          </button>
-          <Link href="/login">
+          <Link to="/login">
             <Button size="sm" className="rounded-full bg-white text-[#1a1a1a] hover:bg-white/90 font-medium">
               {t("nav.login")}
             </Button>
           </Link>
-          <button className="p-2 text-white/70 hover:text-white transition-colors">
-            <Menu className="h-5 w-5" />
-          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -92,15 +93,20 @@ export function Navbar() {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
-              className="block rounded-lg px-3 py-2 text-base font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+              to={link.href}
+              className={cn(
+                "block rounded-lg px-3 py-2 text-base font-medium transition-colors",
+                isActive(link.href)
+                  ? "bg-white/10 text-white"
+                  : "text-white/80 hover:bg-white/10 hover:text-white"
+              )}
               onClick={() => setIsOpen(false)}
             >
               {t(link.labelKey)}
             </Link>
           ))}
           <div className="flex flex-col gap-2 pt-4">
-            <Link href="/login" onClick={() => setIsOpen(false)}>
+            <Link to="/login" onClick={() => setIsOpen(false)}>
               <Button className="w-full rounded-full bg-white text-[#1a1a1a] hover:bg-white/90">
                 {t("nav.login")}
               </Button>

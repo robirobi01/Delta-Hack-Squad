@@ -1,4 +1,4 @@
-"use client"
+
 
 import { TrendingUp, TrendingDown, Minus } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"

@@ -75,7 +75,7 @@ export default function RoadmapPage() {
               {isEn ? "Building the Future of Food Security" : "খাদ্য নিরাপত্তার ভবিষ্যত তৈরি করা"}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-white/80">
-              {isEn 
+              {isEn
                 ? "Our roadmap outlines the journey from a prototype to a comprehensive platform that empowers farmers across Bangladesh."
                 : "আমাদের রোডম্যাপ একটি প্রোটোটাইপ থেকে একটি ব্যাপক প্ল্যাটফর্মে যাত্রার রূপরেখা দেয় যা বাংলাদেশ জুড়ে কৃষকদের ক্ষমতায়ন করে।"}
             </p>
@@ -100,17 +100,15 @@ export default function RoadmapPage() {
               {roadmapPhases.map((phase, index) => (
                 <div key={index} className={`relative flex flex-col lg:flex-row ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
                   <div className="flex-1 lg:px-8">
-                    <div className={`rounded-2xl border p-6 lg:p-8 ${
-                      phase.status === "completed" ? "border-emerald-200 bg-white shadow-sm" :
-                      phase.status === "current" ? "border-amber-400 bg-white shadow-lg" :
-                      "border-emerald-100 bg-white/50"
-                    }`}>
+                    <div className={`rounded-2xl border p-6 lg:p-8 ${phase.status === "completed" ? "border-emerald-200 bg-white shadow-sm" :
+                        phase.status === "current" ? "border-amber-400 bg-white shadow-lg" :
+                          "border-emerald-100 bg-white/50"
+                      }`}>
                       <div className="mb-4 flex items-center gap-3">
-                        <span className={`rounded-full px-3 py-1 text-sm font-semibold ${
-                          phase.status === "completed" ? "bg-emerald-100 text-emerald-700" :
-                          phase.status === "current" ? "bg-amber-500 text-white" :
-                          "bg-gray-100 text-gray-500"
-                        }`}>{phase.phase}</span>
+                        <span className={`rounded-full px-3 py-1 text-sm font-semibold ${phase.status === "completed" ? "bg-emerald-100 text-emerald-700" :
+                            phase.status === "current" ? "bg-amber-500 text-white" :
+                              "bg-gray-100 text-gray-500"
+                          }`}>{phase.phase}</span>
                         <span className="text-sm text-gray-500">{phase.timeline}</span>
                       </div>
                       <h3 className="font-serif text-2xl font-bold text-emerald-800">{isEn ? phase.titleEn : phase.titleBn}</h3>
@@ -131,11 +129,10 @@ export default function RoadmapPage() {
                     </div>
                   </div>
 
-                  <div className={`absolute left-4 top-8 hidden h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full border-4 lg:left-1/2 lg:flex ${
-                    phase.status === "completed" ? "border-emerald-600 bg-emerald-600" :
-                    phase.status === "current" ? "border-amber-500 bg-amber-500" :
-                    "border-gray-300 bg-emerald-50"
-                  }`}>
+                  <div className={`absolute left-4 top-8 hidden h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full border-4 lg:left-1/2 lg:flex ${phase.status === "completed" ? "border-emerald-600 bg-emerald-600" :
+                      phase.status === "current" ? "border-amber-500 bg-amber-500" :
+                        "border-gray-300 bg-emerald-50"
+                    }`}>
                     {phase.status === "completed" && <CheckCircle className="h-3 w-3 text-white" />}
                     {phase.status === "current" && <Rocket className="h-3 w-3 text-white" />}
                   </div>
@@ -161,4 +158,15 @@ export default function RoadmapPage() {
             {futureFeatures.map((feature, index) => (
               <div key={index} className="group rounded-2xl border border-emerald-100 bg-emerald-50 p-6 transition-all hover:border-amber-200 hover:shadow-lg">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 transition-colors group-hover:bg-amber-100">
-                  <feature.icon className="h-6 w-6 text-emerald-600 transition-colors group-hover:text-amber-\
+                  <feature.icon className="h-6 w-6 text-emerald-600 transition-colors group-hover:text-amber-600" />
+                </div>
+                <h3 className="mb-2 font-serif text-xl font-bold text-emerald-800">{isEn ? feature.titleEn : feature.titleBn}</h3>
+                <p className="text-sm text-gray-600">{isEn ? feature.descEn : feature.descBn}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}

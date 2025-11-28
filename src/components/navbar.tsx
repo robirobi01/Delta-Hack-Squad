@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { LanguageToggle } from "@/components/language-toggle"
 import { useLanguage } from "@/lib/language-context"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/lib/auth-context"
 
 const navLinks = [
   { href: "/", labelKey: "nav.home" },
@@ -24,11 +25,10 @@ export function Navbar() {
   const { t } = useLanguage()
   const location = useLocation()
   const navigate = useNavigate()
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
+  const { user, logout } = useAuth()
 
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated')
-    localStorage.removeItem('userPhone')
+  const handleLogout = async () => {
+    await logout()
     navigate('/')
     setIsOpen(false)
   }
@@ -71,7 +71,7 @@ export function Navbar() {
         {/* Desktop Right Actions */}
         <div className="hidden items-center gap-2 lg:flex">
           <LanguageToggle />
-          {isAuthenticated ? (
+          {user ? (
             <Button
               size="sm"
               onClick={handleLogout}
@@ -126,7 +126,7 @@ export function Navbar() {
             </Link>
           ))}
           <div className="flex flex-col gap-2 pt-4">
-            {isAuthenticated ? (
+            {user ? (
               <Button
                 onClick={handleLogout}
                 className="w-full rounded-full bg-white text-[#1a1a1a] hover:bg-white/90 flex items-center justify-center gap-2"

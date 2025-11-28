@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { WeatherWidget } from "@/components/weather-widget"
@@ -8,6 +8,9 @@ import { AlertsCard } from "@/components/alerts-card"
 import { MarketPricesCard } from "@/components/market-prices-card"
 import { useLanguage } from "@/lib/language-context"
 import { User, MessageCircle, BookOpen, ArrowRight, Warehouse, Phone, Plus, Pencil, Trash2, LogOut } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
+import { doc, getDoc } from "firebase/firestore"
+import { db } from "@/lib/firebase"
 
 interface CropBatch {
     id: number
@@ -23,10 +26,28 @@ export default function DashboardPage() {
     const { language } = useLanguage()
     const isEn = language === "en"
     const navigate = useNavigate()
+    const { user, logout } = useAuth()
+    const [userData, setUserData] = useState<any>(null)
 
-    const handleLogout = () => {
-        localStorage.removeItem('isAuthenticated')
-        localStorage.removeItem('userPhone')
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (user) {
+                try {
+                    const docRef = doc(db, "users", user.uid)
+                    const docSnap = await getDoc(docRef)
+                    if (docSnap.exists()) {
+                        setUserData(docSnap.data())
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error)
+                }
+            }
+        }
+        fetchUserData()
+    }, [user])
+
+    const handleLogout = async () => {
+        await logout()
         navigate('/')
     }
 
@@ -184,9 +205,14 @@ export default function DashboardPage() {
                             </div>
                             <div>
                                 <p className="text-sm text-gray-500">{isEn ? "Welcome back," : "স্বাগতম,"}</p>
-                                <h1 className="font-serif text-2xl font-bold text-emerald-800">{isEn ? "Abdul Karim" : "আব্দুল করিম"}</h1>
+                                <h1 className="font-serif text-2xl font-bold text-emerald-800">
+                                    {userData ? userData.name : (isEn ? "Loading..." : "লোড হচ্ছে...")}
+                                </h1>
                                 <p className="text-sm text-gray-500">
-                                    {isEn ? "Rangpur Division • Rice Farmer" : "রংপুর বিভাগ • ধান চাষি"}
+                                    {userData
+                                        ? `${userData.division} • ${userData.area}`
+                                        : (isEn ? "Loading location..." : "অবস্থান লোড হচ্ছে...")
+                                    }
                                 </p>
                             </div>
                         </div>

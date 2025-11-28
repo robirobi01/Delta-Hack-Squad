@@ -30,39 +30,43 @@ const Loading = () => (
 )
 
 
+import { AuthProvider } from '@/lib/auth-context'
+
 export default function App() {
     return (
-        <LanguageProvider>
-            <div className="flex flex-col min-h-screen font-sans antialiased">
-                <ScrollToTop />
-                <Navbar />
-                <main className="grow">
-                    <Suspense fallback={<Loading />}>
-                        <Routes>
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/about" element={<AboutPage />} />
-                            <Route path="/problem" element={<ProblemPage />} />
-                            <Route path="/approach" element={<ApproachPage />} />
-                            <Route path="/dashboard" element={
-                                <ProtectedRoute>
-                                    <DashboardPage />
-                                </ProtectedRoute>
-                            } />
-                            <Route path="/chatbot" element={
-                                <ProtectedRoute>
-                                    <ChatbotPage />
-                                </ProtectedRoute>
-                            } />
-                            <Route path="/farmers" element={<FarmersPage />} />
-                            <Route path="/public" element={<PublicPage />} />
-                            <Route path="/roadmap" element={<RoadmapPage />} />
-                            <Route path="/contact" element={<ContactPage />} />
-                            <Route path="/login" element={<LoginPage />} />
-                        </Routes>
-                    </Suspense>
-                </main>
-                <Footer />
-            </div>
-        </LanguageProvider>
+        <AuthProvider>
+            <LanguageProvider>
+                <div className="flex flex-col min-h-screen font-sans antialiased">
+                    <ScrollToTop />
+                    <Navbar />
+                    <main className="grow">
+                        <Suspense fallback={<Loading />}>
+                            <Routes>
+                                <Route path="/" element={<HomePage />} />
+                                <Route path="/about" element={<AboutPage />} />
+                                <Route path="/problem" element={<ProblemPage />} />
+                                <Route path="/approach" element={<ApproachPage />} />
+                                <Route path="/dashboard" element={
+                                    <ProtectedRoute>
+                                        <DashboardPage />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/chatbot" element={
+                                    <ProtectedRoute>
+                                        <ChatbotPage />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/farmers" element={<FarmersPage />} />
+                                <Route path="/public" element={<PublicPage />} />
+                                <Route path="/roadmap" element={<RoadmapPage />} />
+                                <Route path="/contact" element={<ContactPage />} />
+                                <Route path="/login" element={<LoginPage />} />
+                            </Routes>
+                        </Suspense>
+                    </main>
+                    <Footer />
+                </div>
+            </LanguageProvider>
+        </AuthProvider>
     )
 }

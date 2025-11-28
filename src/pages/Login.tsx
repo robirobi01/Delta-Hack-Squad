@@ -10,6 +10,10 @@ import gatherImg from "/img/gather.png"
 const divisions = ["Barishal", "Chattogram", "Dhaka", "Khulna", "Mymensingh", "Rajshahi", "Rangpur", "Sylhet"]
 const divisionsBn = ["বরিশাল", "চট্টগ্রাম", "ঢাকা", "খুলনা", "ময়মনসিংহ", "রাজশাহী", "রংপুর", "সিলেট"]
 
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { doc, setDoc } from "firebase/firestore"
+import { auth, db } from "@/lib/firebase"
+
 export default function LoginPage() {
   const navigate = useNavigate()
   const { language } = useLanguage()
@@ -23,29 +27,57 @@ export default function LoginPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simple validation
-    if (isLogin) {
-      // For login: check phone and password
-      if (!formData.phone || !formData.password) {
-        alert(isEn ? "Please enter phone and password" : "অনুগ্রহ করে ফোন এবং পাসওয়ার্ড লিখুন")
-        setIsSubmitting(false)
-        return
+    try {
+      const email = `${formData.phone}@harvestguard.com`
+
+      if (isLogin) {
+        // Login
+        if (!formData.phone || !formData.password) {
+          alert(isEn ? "Please enter phone and password" : "অনুগ্রহ করে ফোন এবং পাসওয়ার্ড লিখুন")
+          setIsSubmitting(false)
+          return
+        }
+        await signInWithEmailAndPassword(auth, email, formData.password)
+      } else {
+        // Registration
+        if (!formData.name || !formData.phone || !formData.password || !formData.division || !formData.area) {
+          alert(isEn ? "Please fill all fields" : "অনুগ্রহ করে সব ক্ষেত্র পূরণ করুন")
+          setIsSubmitting(false)
+          return
+        }
+
+        // Create user in Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, formData.password)
+        const user = userCredential.user
+
+        // Store user details in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          name: formData.name,
+          phone: formData.phone,
+          division: formData.division,
+          area: formData.area,
+          createdAt: new Date().toISOString()
+        })
       }
-    } else {
-      // For registration: check all fields
-      if (!formData.name || !formData.phone || !formData.password || !formData.division || !formData.area) {
-        alert(isEn ? "Please fill all fields" : "অনুগ্রহ করে সব ক্ষেত্র পূরণ করুন")
-        setIsSubmitting(false)
-        return
+
+      // Redirect to dashboard
+      navigate("/dashboard")
+    } catch (error: any) {
+      console.error("Auth error:", error)
+      let errorMessage = isEn ? "Authentication failed" : "প্রমাণীকরণ ব্যর্থ হয়েছে"
+
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        errorMessage = isEn ? "Invalid phone or password" : "ভুল ফোন বা পাসওয়ার্ড"
+      } else if (error.code === 'auth/email-already-in-use') {
+        errorMessage = isEn ? "User already exists" : "ব্যবহারকারী ইতিমধ্যে বিদ্যমান"
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = isEn ? "Password should be at least 6 characters" : "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে"
       }
+
+      alert(errorMessage)
+    } finally {
+      setIsSubmitting(false)
     }
-
-    // Store auth state in localStorage
-    localStorage.setItem('isAuthenticated', 'true')
-    localStorage.setItem('userPhone', formData.phone)
-
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    navigate("/dashboard")
   }
 
   const handleGmailLogin = () => {

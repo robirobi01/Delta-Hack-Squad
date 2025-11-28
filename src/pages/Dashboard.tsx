@@ -7,7 +7,7 @@ import { TipsCard } from "@/components/tips-card"
 import { AlertsCard } from "@/components/alerts-card"
 import { MarketPricesCard } from "@/components/market-prices-card"
 import { useLanguage } from "@/lib/language-context"
-import { User, MessageCircle, BookOpen, ArrowRight, Warehouse, Phone, Plus, Pencil, Trash2, LogOut } from "lucide-react"
+import { User, MessageCircle, BookOpen, ArrowRight, Warehouse, Phone, Plus, Pencil, Trash2, LogOut, Download } from "lucide-react"
 import { useAuth } from "@/lib/auth-context"
 import { doc, getDoc } from "firebase/firestore"
 import { db } from "@/lib/firebase"
@@ -289,27 +289,62 @@ export default function DashboardPage() {
                             <h3 className="font-serif text-lg font-semibold text-emerald-800">
                                 {isEn ? "My Crop Batches" : "আমার ফসলের ব্যাচ"}
                             </h3>
-                            <Button
-                                onClick={() => {
-                                    if (!showAddCrop) {
-                                        setEditingCropId(null)
-                                        setCropData({
-                                            cropType: "Paddy/Rice",
-                                            estimatedWeight: "",
-                                            harvestDate: "",
-                                            division: "",
-                                            district: "",
-                                            storageType: ""
-                                        })
-                                    }
-                                    setShowAddCrop(!showAddCrop)
-                                }}
-                                size="sm"
-                                className="bg-emerald-600 text-white hover:bg-emerald-700"
-                            >
-                                <Plus className="h-4 w-4 mr-1" />
-                                {isEn ? "Add Crop" : "ফসল যোগ করুন"}
-                            </Button>
+                            <div className="flex gap-2">
+                                <Button
+                                    onClick={() => {
+                                        const headers = ['ID', 'Crop Type', 'Weight (kg)', 'Harvest Date', 'Division', 'District', 'Storage Type']
+                                        const rows = registeredCrops.map(crop => [
+                                            crop.id,
+                                            crop.cropType,
+                                            crop.estimatedWeight,
+                                            crop.harvestDate,
+                                            crop.division,
+                                            crop.district,
+                                            crop.storageType
+                                        ])
+
+                                        const csvContent = [
+                                            headers.join(','),
+                                            ...rows.map(row => row.join(','))
+                                        ].join('\n')
+
+                                        const blob = new Blob([csvContent], { type: 'text/csv' })
+                                        const url = URL.createObjectURL(blob)
+                                        const a = document.createElement('a')
+                                        a.href = url
+                                        a.download = `harvest-guard-crops-${new Date().toISOString().split('T')[0]}.csv`
+                                        a.click()
+                                        URL.revokeObjectURL(url)
+                                    }}
+                                    size="sm"
+                                    variant="outline"
+                                    className="border-emerald-200 text-emerald-700 hover:bg-emerald-50"
+                                >
+                                    <Download className="h-4 w-4 mr-1" />
+                                    CSV
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        if (!showAddCrop) {
+                                            setEditingCropId(null)
+                                            setCropData({
+                                                cropType: "Paddy/Rice",
+                                                estimatedWeight: "",
+                                                harvestDate: "",
+                                                division: "",
+                                                district: "",
+                                                storageType: ""
+                                            })
+                                        }
+                                        setShowAddCrop(!showAddCrop)
+                                    }}
+                                    size="sm"
+                                    className="bg-emerald-600 text-white hover:bg-emerald-700"
+                                >
+                                    <Plus className="h-4 w-4 mr-1" />
+                                    {isEn ? "Add Crop" : "ফসল যোগ করুন"}
+                                </Button>
+                            </div>
                         </div>
 
                         {showAddCrop && (

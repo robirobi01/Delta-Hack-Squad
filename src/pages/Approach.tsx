@@ -18,6 +18,7 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react"
+import ruralBangladesh from "/img/ruralBangladesh.png"
 
 export default function ApproachPage() {
   const { language } = useLanguage()
@@ -308,7 +309,7 @@ export default function ApproachPage() {
             </div>
             <div className="relative">
               <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 animate-breathing">
-                <img src="/placeholder.svg?height=500&width=600" alt="" className="rounded-xl h-full w-full object-cover" />
+                <img src={ruralBangladesh} alt="Rural Bangladesh context" className="rounded-xl h-full w-full object-cover" />
               </div>
             </div>
           </div>

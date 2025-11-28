@@ -18,7 +18,10 @@ import {
   Droplets,
   Bug,
   ArrowRight,
+  CheckCircle,
+  Image as ImageIcon,
 } from "lucide-react"
+import farmerAndSun from "/img/Farmerandsun.png"
 
 export default function ProblemPage() {
   const { language } = useLanguage()
@@ -190,25 +193,112 @@ export default function ProblemPage() {
         }
       `}</style>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 py-20 lg:py-28">
-        <div className="absolute inset-0 opacity-20">
-          <img src="/placeholder.svg?height=600&width=1600" alt="" className="h-full w-full object-cover" />
-        </div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="mb-4 inline-block rounded-full bg-red-500/20 px-4 py-1.5 text-sm font-medium text-red-300">
-              {isEn ? "The Challenge" : "চ্যালেঞ্জ"}
-            </span>
-            <h1 className="font-serif text-4xl font-bold tracking-tight text-white text-balance sm:text-5xl">
-              {isEn
-                ? "Bangladesh Loses Millions of Tonnes of Food Every Year"
-                : "বাংলাদেশে প্রতি বছর লক্ষ লক্ষ টন খাদ্য নষ্ট হয়"}
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/80">
-              {isEn
-                ? "From farm to table, food is lost at every stage of the supply chain. This preventable loss affects food security, farmer incomes, and the environment."
-                : "খামার থেকে টেবিল পর্যন্ত, সরবরাহ শৃঙ্খলের প্রতিটি পর্যায়ে খাদ্য নষ্ট হয়। এই প্রতিরোধযোগ্য ক্ষতি খাদ্য নিরাপত্তা এবং কৃষকদের আয়কে প্রভাবিত করে।"}
-            </p>
+      <section className="relative overflow-hidden bg-white py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            {/* Left Column - Text Content */}
+            <div>
+              <span className="mb-6 inline-block rounded-full bg-emerald-100 px-4 py-1.5 text-sm font-medium text-emerald-700">
+                {isEn ? "The Challenge" : "চ্যালেঞ্জ"}
+              </span>
+              <h1 className="font-serif text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+                {isEn
+                  ? "Bangladesh Loses Millions of Tonnes of Food Every Year"
+                  : "বাংলাদেশে প্রতি বছর লক্ষ লক্ষ টন খাদ্য নষ্ট হয়"}
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-gray-600">
+                {isEn
+                  ? "From farm to table, food loss occurs at every stage of the supply chain — during harvesting, storage, transportation, and distribution."
+                  : "খামার থেকে টেবিল পর্যন্ত, সরবরাহ শৃঙ্খলের প্রতিটি পর্যায়ে খাদ্য নষ্ট হয়।"}
+              </p>
+
+              {/* Bullet Points */}
+              <ul className="mt-8 space-y-4">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-amber-500" />
+                  <span className="text-gray-700">
+                    {isEn
+                      ? "12-32% of staple crops lost post-harvest"
+                      : "১২-৩২% প্রধান ফসল পরবর্তী ক্ষতি"}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-amber-500" />
+                  <span className="text-gray-700">
+                    {isEn
+                      ? "Inadequate storage facilities and cold chains"
+                      : "অপর্যাপ্ত সংরক্ষণ সুবিধা এবং কোল্ড চেইন"}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-amber-500" />
+                  <span className="text-gray-700">
+                    {isEn
+                      ? "Limited access to market information"
+                      : "বাজার তথ্যে সীমিত প্রবেশাধিকার"}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-1 h-5 w-5 flex-shrink-0 text-amber-500" />
+                  <span className="text-gray-700">
+                    {isEn
+                      ? "Climate unpredictability affecting harvests"
+                      : "জলবায়ু অনিশ্চয়তা ফসলকে প্রভাবিত করছে"}
+                  </span>
+                </li>
+              </ul>
+
+              {/* Learn More Link */}
+              <div className="mt-8">
+                <Link
+                  to="/approach"
+                  className="inline-flex items-center gap-2 text-emerald-600 font-medium hover:text-emerald-700 transition-colors"
+                >
+                  {isEn ? "Learn About the Problem" : "সমস্যা সম্পর্কে জানুন"}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column - Image with Floating Cards */}
+            <div className="relative hidden lg:block">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
+                <img
+                  src={farmerAndSun}
+                  alt="Farmer in field"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+
+              {/* $1.5B Card - Top Right */}
+              <div className="absolute -top-6 -right-6 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 px-6 py-4 shadow-xl text-white">
+                <div className="text-3xl font-bold">$1.5B</div>
+                <div className="text-sm opacity-90">
+                  {isEn ? "Annual Loss" : "বার্ষিক ক্ষতি"}
+                </div>
+              </div>
+
+              {/* 32% Card - Bottom Center */}
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-2xl bg-white px-6 py-4 shadow-xl border border-gray-100">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-50">
+                    <TrendingDown className="h-6 w-6 text-red-500" />
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-gray-900">32%</div>
+                    <div className="text-sm text-gray-600">
+                      {isEn ? "Post-Harvest Loss" : "পরবর্তী ক্ষতি"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image Placeholder Icon - Optional decorative element */}
+              <div className="absolute top-8 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm shadow-lg">
+                <ImageIcon className="h-6 w-6 text-gray-400" />
+              </div>
+            </div>
           </div>
         </div>
       </section>

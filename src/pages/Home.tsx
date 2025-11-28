@@ -20,6 +20,12 @@ import {
     Shield,
 } from "lucide-react"
 import cropsProtected from "/img/CropsProtected.avif"
+import farmerAndSun from "/img/Farmerandsun.png"
+import farmerOne from "/img/FarmerOne.jpeg"
+import farmerTwo from "/img/FarmerTwo.jpeg"
+import farmerThree from "/img/FarmerThree.jpg"
+import farmerFour from "/img/FarmerFour.jpg"
+import weatherImg from "/img/weather.png"
 export default function HomePage() {
     const { t, language } = useLanguage()
 
@@ -147,14 +153,12 @@ export default function HomePage() {
                             {/* Trust badges */}
                             <div className="mt-12 flex items-center gap-6">
                                 <div className="flex -space-x-3">
-                                    {[1, 2, 3, 4].map((i) => (
-                                        <div key={i} className="h-10 w-10 rounded-full border-2 border-emerald-800 overflow-hidden">
-                                            <Image
-                                                src={`/placeholder.svg?height=40&width=40&query=bangladeshi farmer portrait ${i}`}
+                                    {[farmerOne, farmerTwo, farmerThree, farmerFour].map((imgSrc, i) => (
+                                        <div key={i} className="h-12 w-12 rounded-full border-2 border-emerald-800 overflow-hidden bg-white">
+                                            <img
+                                                src={imgSrc}
                                                 alt="Farmer"
-                                                width={40}
-                                                height={40}
-                                                className="object-cover"
+                                                className="h-full w-full object-cover object-center"
                                             />
                                         </div>
                                     ))}
@@ -254,7 +258,7 @@ export default function HomePage() {
                         <div className="relative">
                             <div className="aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl animate-breathing">
                                 <Image
-                                    src="/placeholder.svg?height=600&width=800"
+                                    src={farmerAndSun}
                                     alt="Food storage in Bangladesh"
                                     width={800}
                                     height={600}
@@ -349,7 +353,7 @@ export default function HomePage() {
                         <div className="relative">
                             <div className="overflow-hidden rounded-3xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm shadow-2xl animate-breathing">
                                 <Image
-                                    src="/placeholder.svg?height=500&width=700"
+                                    src={weatherImg}
                                     alt="Dashboard preview"
                                     width={700}
                                     height={500}

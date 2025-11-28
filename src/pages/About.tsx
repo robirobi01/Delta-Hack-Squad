@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button"
 import { SectionHeader } from "@/components/section-header"
 import { Target, Eye, Heart, Users, Globe, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
+import xamImg from "/img/xam.png.png"
+import ritishImg from "/img/ritishvai.jpg"
+import jimImg from "/img/jim.jpg"
 
 
 const values = [
@@ -73,14 +76,26 @@ const milestones = [
 
 const team = [
     {
-        name: "Dr. Rafiq Ahmed",
-        namebn: "ড. রফিক আহমেদ",
-        role: "Founder & Lead Researcher",
-        rolebn: "প্রতিষ্ঠাতা ও প্রধান গবেষক",
+        name: "Jamee",
+        namebn: "জামী",
+        role: "Front End Developer",
+        rolebn: "ফ্রন্ট এন্ড ডেভেলপার",
+        image: xamImg,
     },
-    { name: "Ayesha Rahman", namebn: "আয়েশা রহমান", role: "Technology Director", rolebn: "প্রযুক্তি পরিচালক" },
-    { name: "Kamal Hossain", namebn: "কামাল হোসেন", role: "Farmer Outreach Lead", rolebn: "কৃষক আউটরিচ প্রধান" },
-    { name: "Nusrat Jahan", namebn: "নুসরাত জাহান", role: "Policy & Partnerships", rolebn: "নীতি ও অংশীদারিত্ব" },
+    {
+        name: "Ritish",
+        namebn: "রিতিশ",
+        role: "Back End Developer",
+        rolebn: "ব্যাকএন্ড ডেভেলপার",
+        image: ritishImg,
+    },
+    {
+        name: "Jim",
+        namebn: "জিম",
+        role: "Prompt King",
+        rolebn: "প্রম্পট কিং",
+        image: jimImg,
+    },
 ]
 
 export default function AboutPage() {
@@ -255,14 +270,14 @@ export default function AboutPage() {
                         }
                         centered
                     />
-                    <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                         {team.map((member, index) => (
                             <div key={index} className="group text-center">
                                 <div className="mx-auto mb-4 h-48 w-48 overflow-hidden rounded-2xl bg-emerald-100 animate-breathing" style={{ animationDelay: `${index * 0.2}s` }}>
                                     <img
-                                        src={`/placeholder.svg?height=192&width=192&query=professional bangladeshi ${index % 2 === 0 ? "male" : "female"} portrait`}
+                                        src={member.image}
                                         alt={isEn ? member.name : member.namebn}
-                                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                                     />
                                 </div>
                                 <h3 className="font-serif text-xl font-semibold text-emerald-800">

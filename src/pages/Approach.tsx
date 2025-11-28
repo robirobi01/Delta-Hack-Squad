@@ -19,6 +19,7 @@ import {
   CheckCircle,
 } from "lucide-react"
 import ruralBangladesh from "/img/ruralBangladesh.png"
+import bgPhoto from "/img/bg-photo.avif"
 
 export default function ApproachPage() {
   const { language } = useLanguage()
@@ -192,7 +193,7 @@ export default function ApproachPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 py-20 lg:py-28">
         <div className="absolute inset-0 opacity-20">
-          <img src="/placeholder.svg?height=600&width=1600" alt="" className="h-full w-full object-cover" />
+          <img src={bgPhoto} alt="" className="h-full w-full object-cover" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">

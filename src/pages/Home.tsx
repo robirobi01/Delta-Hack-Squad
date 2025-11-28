@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom"
 import Image from "@/components/image"
 import { Button } from "@/components/ui/button"
@@ -26,8 +27,19 @@ import farmerTwo from "/img/FarmerTwo.jpeg"
 import farmerThree from "/img/FarmerThree.jpg"
 import farmerFour from "/img/FarmerFour.jpg"
 import weatherImg from "/img/weather.png"
+import riceImg from "/img/rice.png"
+import bgPhoto from "/img/bg-photo.avif"
 export default function HomePage() {
     const { t, language } = useLanguage()
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [globalPosition, setGlobalPosition] = useState({ x: 0, y: 0 });
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            setGlobalPosition({ x: e.clientX, y: e.clientY });
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, []);
 
     const stats = [
         { value: 4.5, suffix: "M", label: t("stats.foodLost"), decimals: 1 },
@@ -59,7 +71,7 @@ export default function HomePage() {
                 language === "bn"
                     ? "এআই চ্যাটবট আমাকে তাৎক্ষণিক পরামর্শ দিয়েছে যখন আমি আমার সংরক্ষিত শস্যে ছত্রাক দেখেছি। এটি আমার পুরো ফসল বাঁচিয়েছে।"
                     : "The AI chatbot gave me instant advice when I noticed mold on my stored grains. It saved my entire harvest.",
-            name: language === "bn" ? "ফাতেমা বেগম" : "Fatima Begum",
+            name: language === "bn" ? "নূরুল কুদ্দুস" : "Nurul Koddus",
             role: language === "bn" ? "গম চাষী, রাজশাহী" : "Wheat Farmer, Rajshahi",
         },
     ]
@@ -87,6 +99,7 @@ export default function HomePage() {
                     }
                 }
 
+
                 .animate-breathing {
                     animation: breathing 4s ease-in-out infinite;
                 }
@@ -95,16 +108,63 @@ export default function HomePage() {
                     animation: breathingGlow 4s ease-in-out infinite;
                 }
             `}</style>
+            {/* Global Floating Rice (Full Dashboard) */}
+            {/* Global Floating Rice (Full Dashboard) */}
+            {[
+                { delay: '1.2s', x: 10, y: 10, s: 30, r: 15 },
+                { delay: '1.5s', x: -20, y: 40, s: 25, r: -20 },
+            ].map((grain, i) => (
+                <div key={`global-${i}`} style={{
+                    position: 'fixed',
+                    transform: `translate(${globalPosition.x}px, ${globalPosition.y}px) rotate(${grain.r}deg)`,
+                    left: grain.x,
+                    top: grain.y,
+                    width: grain.s,
+                    height: grain.s,
+                    pointerEvents: 'none',
+                    zIndex: 9999,
+                    transition: `transform ${grain.delay} ease-out`
+                }}>
+                    <img src={riceImg} alt="Floating Rice" className="w-full h-full object-contain drop-shadow-lg" />
+                </div>
+            ))}
+
             {/* Hero Section */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 min-h-[90vh] flex items-center">
+            <section
+                onPointerMove={e => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    setPosition({
+                        x: e.clientX - rect.left,
+                        y: e.clientY - rect.top
+                    });
+                }}
+                className="relative overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 min-h-[90vh] flex items-center"
+            >
+                {[
+                    { delay: '0.8s', x: -20, y: -20, s: 40, r: 0 },
+                    { delay: '1.1s', x: -70, y: 30, s: 30, r: 45 },
+                    { delay: '0.6s', x: 40, y: -60, s: 35, r: -30 },
+                ].map((grain, i) => (
+                    <div key={i} style={{
+                        position: 'absolute',
+                        transform: `translate(${position.x}px, ${position.y}px) rotate(${grain.r}deg)`,
+                        left: grain.x,
+                        top: grain.y,
+                        width: grain.s,
+                        height: grain.s,
+                        pointerEvents: 'none',
+                        zIndex: 50,
+                        transition: `transform ${grain.delay} ease-out`
+                    }}>
+                        <img src={riceImg} alt="Floating Rice" className="w-full h-full object-contain drop-shadow-lg" />
+                    </div>
+                ))}
                 {/* Background Image */}
                 <div className="absolute inset-0">
-                    <Image
-                        src="/placeholder.svg?height=1080&width=1920"
-                        alt="Bangladesh rice paddy field"
-                        fill
-                        className="object-cover opacity-30"
-                        priority
+                    <img
+                        src={bgPhoto}
+                        alt="Background Pattern"
+                        className="absolute inset-0 h-full w-full object-cover opacity-30"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/95 via-emerald-800/90 to-emerald-900/80" />
                 </div>
@@ -199,10 +259,10 @@ export default function HomePage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Stats Section */}
-            <section className="relative -mt-12 z-10 mx-4 sm:mx-6 lg:mx-auto lg:max-w-6xl">
+            < section className="relative -mt-12 z-10 mx-4 sm:mx-6 lg:mx-auto lg:max-w-6xl" >
                 <div className="rounded-3xl bg-white shadow-2xl shadow-emerald-900/10 border border-emerald-100 p-8 animate-breathing">
 
                     <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
@@ -221,10 +281,10 @@ export default function HomePage() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Problem Preview */}
-            <section className="bg-gradient-to-b from-white to-emerald-50/50 py-24 lg:py-32">
+            < section className="bg-gradient-to-b from-white to-emerald-50/50 py-24 lg:py-32" >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="grid items-center gap-16 lg:grid-cols-2">
                         <div>
@@ -284,10 +344,10 @@ export default function HomePage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Features Section */}
-            <section className="bg-white py-24 lg:py-32">
+            < section className="bg-white py-24 lg:py-32" >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <SectionHeader
                         label={t("features.label")}
@@ -309,14 +369,14 @@ export default function HomePage() {
                         </Link>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Dashboard Preview */}
-            <section className="relative overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 py-24 lg:py-32">
+            < section className="relative overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 py-24 lg:py-32" >
                 {/* Background pattern */}
-                <div className="absolute inset-0 opacity-10">
+                < div className="absolute inset-0 opacity-10" >
                     <Image src="/placeholder.svg?height=800&width=1600" alt="" fill className="object-cover" />
-                </div>
+                </div >
 
                 <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -377,10 +437,10 @@ export default function HomePage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Testimonials */}
-            <section className="bg-gradient-to-b from-emerald-50/50 to-white py-24 lg:py-32">
+            < section className="bg-gradient-to-b from-emerald-50/50 to-white py-24 lg:py-32" >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <SectionHeader label={t("testimonials.label")} title={t("testimonials.title")} centered />
                     <div className="mt-16 grid gap-8 md:grid-cols-2">
@@ -403,7 +463,7 @@ export default function HomePage() {
                                 <div className="mt-6 flex items-center gap-4">
                                     <div className="h-14 w-14 overflow-hidden rounded-full border-2 border-emerald-100">
                                         <Image
-                                            src={`/placeholder.svg?height=56&width=56&query=bangladeshi farmer portrait ${index === 0 ? "male elderly" : "female middle aged"} smiling`}
+                                            src={index === 0 ? farmerOne : farmerThree}
                                             alt={testimonial.name}
                                             width={56}
                                             height={56}
@@ -419,10 +479,10 @@ export default function HomePage() {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* CTA Section */}
-            <section className="relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 py-24">
+            < section className="relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 py-24" >
                 <div className="absolute inset-0 opacity-20">
                     <Image src="/placeholder.svg?height=400&width=1600" alt="" fill className="object-cover" />
                 </div>
@@ -448,7 +508,7 @@ export default function HomePage() {
                         </Link>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     )
 }

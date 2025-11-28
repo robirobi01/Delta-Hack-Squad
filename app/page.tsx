@@ -55,7 +55,7 @@ export default function HomePage() {
         language === "bn"
           ? "এআই চ্যাটবট আমাকে তাৎক্ষণিক পরামর্শ দিয়েছে যখন আমি আমার সংরক্ষিত শস্যে ছত্রাক দেখেছি। এটি আমার পুরো ফসল বাঁচিয়েছে।"
           : "The AI chatbot gave me instant advice when I noticed mold on my stored grains. It saved my entire harvest.",
-      name: language === "bn" ? "ফাতেমা বেগম" : "Fatima Begum",
+      name: language === "bn" ? "নূরুল কুদ্দুস" : "Nurul Koddus",
       role: language === "bn" ? "গম চাষী, রাজশাহী" : "Wheat Farmer, Rajshahi",
     },
   ]

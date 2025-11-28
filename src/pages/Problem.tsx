@@ -22,6 +22,10 @@ import {
   Image as ImageIcon,
 } from "lucide-react"
 import farmerAndSun from "/img/Farmerandsun.png"
+import weatherImg from "/img/weather.png"
+import farmerWithRice from "/img/Farmer with rice.png"
+import villageWomen from "/img/Village women.png"
+import farmer from "/img/Farmer.png"
 
 export default function ProblemPage() {
   const { language } = useLanguage()
@@ -391,7 +395,7 @@ export default function ProblemPage() {
             </div>
             <div className="relative">
               <div className="aspect-square overflow-hidden rounded-2xl shadow-xl animate-breathing">
-                <img src="/placeholder.svg?height=600&width=600" alt="" className="h-full w-full object-cover" />
+                <img src={weatherImg} alt="Weather and crop loss visualization" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -435,13 +439,13 @@ export default function ProblemPage() {
             <div className="order-2 lg:order-1">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="overflow-hidden rounded-2xl shadow-lg animate-breathing">
-                  <img src="/placeholder.svg?height=300&width=300" alt="" className="h-full w-full object-cover" />
+                  <img src={farmerWithRice} alt="Farmer with rice harvest" className="h-full w-full object-cover" />
                 </div>
                 <div className="overflow-hidden rounded-2xl shadow-lg animate-breathing" style={{ animationDelay: "0.3s" }}>
-                  <img src="/placeholder.svg?height=300&width=300" alt="" className="h-full w-full object-cover" />
+                  <img src={villageWomen} alt="Village women" className="h-full w-full object-cover" />
                 </div>
                 <div className="overflow-hidden rounded-2xl shadow-lg sm:col-span-2 animate-breathing" style={{ animationDelay: "0.6s" }}>
-                  <img src="/placeholder.svg?height=200&width=600" alt="" className="h-48 w-full object-cover" />
+                  <img src={farmer} alt="Farmer in field" className="h-48 w-full object-cover" />
                 </div>
               </div>
             </div>

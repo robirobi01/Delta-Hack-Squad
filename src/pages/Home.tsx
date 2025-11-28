@@ -19,7 +19,7 @@ import {
     Leaf,
     Shield,
 } from "lucide-react"
-
+import cropsProtected from "/img/CropsProtected.avif"
 export default function HomePage() {
     const { t, language } = useLanguage()
 
@@ -170,8 +170,7 @@ export default function HomePage() {
                         <div className="relative hidden lg:block">
                             <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl animate-breathing">
                                 <Image
-                                    src="/img/CropsProtected.avif"
-                                    alt="Bangladeshi farmer harvesting crops"
+                                    src={cropsProtected}
                                     width={500}
                                     height={600}
                                     className="h-full w-full object-cover"

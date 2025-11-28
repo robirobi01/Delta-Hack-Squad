@@ -60,6 +60,35 @@ export default function HomePage() {
 
     return (
         <div className="flex flex-col">
+            <style>{`
+                @keyframes breathing {
+                    0%, 100% {
+                        opacity: 0.8;
+                        transform: scale(1);
+                    }
+                    50% {
+                        opacity: 1;
+                        transform: scale(1.05);
+                    }
+                }
+
+                @keyframes breathingGlow {
+                    0%, 100% {
+                        box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+                    }
+                    50% {
+                        box-shadow: 0 0 40px rgba(251, 191, 36, 0.6);
+                    }
+                }
+
+                .animate-breathing {
+                    animation: breathing 4s ease-in-out infinite;
+                }
+
+                .animate-breathing-glow {
+                    animation: breathingGlow 4s ease-in-out infinite;
+                }
+            `}</style>
             {/* Hero Section */}
             <section className="relative overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 min-h-[90vh] flex items-center">
                 {/* Background Image */}
@@ -75,8 +104,8 @@ export default function HomePage() {
                 </div>
 
                 {/* Decorative elements */}
-                <div className="absolute top-20 right-10 w-72 h-72 bg-amber-400/20 rounded-full blur-3xl" />
-                <div className="absolute bottom-20 left-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl" />
+                <div className="absolute top-20 right-10 w-72 h-72 bg-amber-400/20 rounded-full blur-3xl animate-breathing" />
+                <div className="absolute bottom-20 left-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-breathing" style={{ animationDelay: "2s" }} />
 
                 <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -139,17 +168,17 @@ export default function HomePage() {
 
                         {/* Hero Image Card */}
                         <div className="relative hidden lg:block">
-                            <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                            <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl animate-breathing">
                                 <Image
-                                    src="/placeholder.svg?height=600&width=500"
+                                    src="/img/CropsProtected.avif"
                                     alt="Bangladeshi farmer harvesting crops"
                                     width={500}
                                     height={600}
-                                    className="object-cover"
+                                    className="h-full w-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-transparent to-transparent" />
                                 <div className="absolute bottom-6 left-6 right-6">
-                                    <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
+                                    <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl animate-breathing-glow">
                                         <div className="flex items-center gap-3">
                                             <div className="h-12 w-12 rounded-xl bg-emerald-100 flex items-center justify-center">
                                                 <Leaf className="h-6 w-6 text-emerald-600" />
@@ -171,7 +200,8 @@ export default function HomePage() {
 
             {/* Stats Section */}
             <section className="relative -mt-12 z-10 mx-4 sm:mx-6 lg:mx-auto lg:max-w-6xl">
-                <div className="rounded-3xl bg-white shadow-2xl shadow-emerald-900/10 border border-emerald-100 p-8">
+                <div className="rounded-3xl bg-white shadow-2xl shadow-emerald-900/10 border border-emerald-100 p-8 animate-breathing">
+
                     <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
                         {stats.map((stat, index) => (
                             <div key={index} className="text-center">
@@ -223,7 +253,7 @@ export default function HomePage() {
                             </Link>
                         </div>
                         <div className="relative">
-                            <div className="aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl">
+                            <div className="aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl animate-breathing">
                                 <Image
                                     src="/placeholder.svg?height=600&width=800"
                                     alt="Food storage in Bangladesh"
@@ -232,7 +262,7 @@ export default function HomePage() {
                                     className="h-full w-full object-cover"
                                 />
                             </div>
-                            <div className="absolute -bottom-6 -left-6 rounded-2xl bg-white p-5 shadow-xl border border-emerald-100">
+                            <div className="absolute -bottom-6 -left-6 rounded-2xl bg-white p-5 shadow-xl border border-emerald-100 animate-breathing-glow">
                                 <div className="flex items-center gap-4">
                                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-100">
                                         <TrendingDown className="h-7 w-7 text-red-600" />
@@ -244,7 +274,7 @@ export default function HomePage() {
                                 </div>
                             </div>
                             {/* Additional floating card */}
-                            <div className="absolute -top-4 -right-4 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 p-4 shadow-xl text-white">
+                            <div className="absolute -top-4 -right-4 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 p-4 shadow-xl text-white animate-breathing-glow" style={{ animationDelay: "1s" }}>
                                 <p className="text-2xl font-bold">$1.5B</p>
                                 <p className="text-xs opacity-90">{language === "bn" ? "বার্ষিক ক্ষতি" : "Annual Loss"}</p>
                             </div>
@@ -318,7 +348,7 @@ export default function HomePage() {
                             </Link>
                         </div>
                         <div className="relative">
-                            <div className="overflow-hidden rounded-3xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm shadow-2xl">
+                            <div className="overflow-hidden rounded-3xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm shadow-2xl animate-breathing">
                                 <Image
                                     src="/placeholder.svg?height=500&width=700"
                                     alt="Dashboard preview"
@@ -328,7 +358,7 @@ export default function HomePage() {
                                 />
                             </div>
                             {/* Floating notification */}
-                            <div className="absolute -top-4 -right-4 rounded-2xl bg-white p-4 shadow-xl animate-pulse">
+                            <div className="absolute -top-4 -right-4 rounded-2xl bg-white p-4 shadow-xl animate-breathing-glow" style={{ animationDelay: "1s" }}>
                                 <div className="flex items-center gap-3">
                                     <div className="h-10 w-10 rounded-xl bg-amber-100 flex items-center justify-center">
                                         <CloudSun className="h-5 w-5 text-amber-600" />
@@ -354,7 +384,8 @@ export default function HomePage() {
                         {testimonials.map((testimonial, index) => (
                             <div
                                 key={index}
-                                className="rounded-3xl border border-emerald-100 bg-white p-8 shadow-lg hover:shadow-xl transition-shadow"
+                                className="rounded-3xl border border-emerald-100 bg-white p-8 shadow-lg hover:shadow-xl transition-shadow animate-breathing"
+                                style={{ animationDelay: `${index * 0.3}s` }}
                             >
                                 <div className="flex gap-1 mb-4">
                                     {[1, 2, 3, 4, 5].map((star) => (

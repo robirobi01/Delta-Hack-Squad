@@ -89,6 +89,35 @@ export default function AboutPage() {
 
     return (
         <div className="flex flex-col">
+            <style>{`
+                @keyframes breathing {
+                    0%, 100% {
+                        opacity: 0.8;
+                        transform: scale(1);
+                    }
+                    50% {
+                        opacity: 1;
+                        transform: scale(1.05);
+                    }
+                }
+
+                @keyframes breathingGlow {
+                    0%, 100% {
+                        box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+                    }
+                    50% {
+                        box-shadow: 0 0 40px rgba(251, 191, 36, 0.6);
+                    }
+                }
+
+                .animate-breathing {
+                    animation: breathing 4s ease-in-out infinite;
+                }
+
+                .animate-breathing-glow {
+                    animation: breathingGlow 4s ease-in-out infinite;
+                }
+            `}</style>
             {/* Hero Section */}
             <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 py-20 lg:py-28">
                 <div className="absolute inset-0 opacity-20">
@@ -115,7 +144,7 @@ export default function AboutPage() {
             <section className="bg-white py-20 lg:py-28">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="grid gap-12 lg:grid-cols-2">
-                        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-8 lg:p-12">
+                        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-8 lg:p-12 animate-breathing">
                             <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-600">
                                 <Target className="h-7 w-7 text-white" />
                             </div>
@@ -128,7 +157,7 @@ export default function AboutPage() {
                                     : "বাংলাদেশে ফসল কাটার পরে খাদ্য ক্ষতি উল্লেখযোগ্যভাবে কমাতে কৃষকদের অ্যাক্সেসযোগ্য প্রযুক্তি, সময়োপযোগী তথ্য এবং সম্প্রদায় সহায়তা ব্যবস্থা দিয়ে ক্ষমতায়ন করা।"}
                             </p>
                         </div>
-                        <div className="rounded-2xl border border-amber-100 bg-amber-50 p-8 lg:p-12">
+                        <div className="rounded-2xl border border-amber-100 bg-amber-50 p-8 lg:p-12 animate-breathing" style={{ animationDelay: "0.3s" }}>
                             <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-amber-500">
                                 <Eye className="h-7 w-7 text-white" />
                             </div>
@@ -160,7 +189,7 @@ export default function AboutPage() {
                     />
                     <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                         {values.map((value, index) => (
-                            <div key={index} className="rounded-2xl border border-emerald-100 bg-white p-6 text-center shadow-sm">
+                            <div key={index} className="rounded-2xl border border-emerald-100 bg-white p-6 text-center shadow-sm animate-breathing" style={{ animationDelay: `${index * 0.15}s` }}>
                                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100">
                                     <value.icon className="h-7 w-7 text-emerald-600" />
                                 </div>
@@ -192,7 +221,8 @@ export default function AboutPage() {
                                 >
                                     <div className="flex-1 md:px-8">
                                         <div
-                                            className={`rounded-2xl border border-emerald-100 bg-emerald-50 p-6 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}
+                                            className={`rounded-2xl border border-emerald-100 bg-emerald-50 p-6 animate-breathing ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}
+                                            style={{ animationDelay: `${index * 0.2}s` }}
                                         >
                                             <span className="inline-block rounded-full bg-amber-500 px-4 py-1 text-sm font-semibold text-white">
                                                 {milestone.year}
@@ -228,7 +258,7 @@ export default function AboutPage() {
                     <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                         {team.map((member, index) => (
                             <div key={index} className="group text-center">
-                                <div className="mx-auto mb-4 h-48 w-48 overflow-hidden rounded-2xl bg-emerald-100">
+                                <div className="mx-auto mb-4 h-48 w-48 overflow-hidden rounded-2xl bg-emerald-100 animate-breathing" style={{ animationDelay: `${index * 0.2}s` }}>
                                     <img
                                         src={`/placeholder.svg?height=192&width=192&query=professional bangladeshi ${index % 2 === 0 ? "male" : "female"} portrait`}
                                         alt={isEn ? member.name : member.namebn}

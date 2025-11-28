@@ -42,11 +42,11 @@ export default function ApproachPage() {
       descBn: "২৪/৭ বুদ্ধিমান সহকারী যা ফসলের স্বাস্থ্য এবং সংরক্ষণ সম্পর্কে প্রশ্নের উত্তর দেয়।",
       features: isEn
         ? [
-            "Instant crop advice",
-            "Spoilage detection (coming soon)",
-            "Storage recommendations",
-            "Multi-language support",
-          ]
+          "Instant crop advice",
+          "Spoilage detection (coming soon)",
+          "Storage recommendations",
+          "Multi-language support",
+        ]
         : ["তাত্ক্ষণিক ফসল পরামর্শ", "পচন সনাক্তকরণ (শীঘ্রই আসছে)", "সংরক্ষণ সুপারিশ", "বহু-ভাষা সমর্থন"],
     },
     {
@@ -159,6 +159,35 @@ export default function ApproachPage() {
 
   return (
     <div className="flex flex-col">
+      <style>{`
+        @keyframes breathing {
+          0%, 100% {
+            opacity: 0.8;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.05);
+          }
+        }
+
+        @keyframes breathingGlow {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.6);
+          }
+        }
+
+        .animate-breathing {
+          animation: breathing 4s ease-in-out infinite;
+        }
+
+        .animate-breathing-glow {
+          animation: breathingGlow 4s ease-in-out infinite;
+        }
+      `}</style>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 py-20 lg:py-28">
         <div className="absolute inset-0 opacity-20">
@@ -196,7 +225,7 @@ export default function ApproachPage() {
           />
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {approach.map((item, index) => (
-              <div key={index} className="relative rounded-2xl border border-emerald-100 bg-emerald-50 p-6 shadow-sm">
+              <div key={index} className="relative rounded-2xl border border-emerald-100 bg-emerald-50 p-6 shadow-sm animate-breathing" style={{ animationDelay: `${index * 0.2}s` }}>
                 <span className="absolute -top-4 left-6 rounded-full bg-amber-500 px-4 py-1 font-serif text-lg font-bold text-white">
                   {item.step}
                 </span>
@@ -228,7 +257,8 @@ export default function ApproachPage() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="group rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm transition-all hover:shadow-lg"
+                className="group rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm transition-all hover:shadow-lg animate-breathing"
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100 transition-colors group-hover:bg-amber-100">
                   <service.icon className="h-7 w-7 text-emerald-600 transition-colors group-hover:text-amber-600" />
@@ -268,7 +298,7 @@ export default function ApproachPage() {
               />
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {techFeatures.map((feature, index) => (
-                  <div key={index} className="rounded-xl border border-white/10 bg-white/5 p-4">
+                  <div key={index} className="rounded-xl border border-white/10 bg-white/5 p-4 animate-breathing" style={{ animationDelay: `${index * 0.2}s` }}>
                     <feature.icon className="mb-3 h-6 w-6 text-amber-400" />
                     <h4 className="font-semibold text-white">{isEn ? feature.titleEn : feature.titleBn}</h4>
                     <p className="mt-1 text-sm text-white/70">{isEn ? feature.descEn : feature.descBn}</p>
@@ -277,8 +307,8 @@ export default function ApproachPage() {
               </div>
             </div>
             <div className="relative">
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4">
-                <img src="/placeholder.svg?height=500&width=600" alt="" className="rounded-xl" />
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-4 animate-breathing">
+                <img src="/placeholder.svg?height=500&width=600" alt="" className="rounded-xl h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -300,7 +330,7 @@ export default function ApproachPage() {
           />
           <div className="mt-16 grid gap-8 md:grid-cols-2">
             {/* For Farmers */}
-            <div className="rounded-2xl border-2 border-emerald-600 bg-emerald-50 p-8 lg:p-10">
+            <div className="rounded-2xl border-2 border-emerald-600 bg-emerald-50 p-8 lg:p-10 animate-breathing">
               <span className="inline-block rounded-full bg-emerald-600 px-4 py-1.5 text-sm font-medium text-white">
                 {isEn ? "For Farmers" : "কৃষকদের জন্য"}
               </span>
@@ -332,7 +362,7 @@ export default function ApproachPage() {
             </div>
 
             {/* For Public */}
-            <div className="rounded-2xl border-2 border-amber-500 bg-amber-50 p-8 lg:p-10">
+            <div className="rounded-2xl border-2 border-amber-500 bg-amber-50 p-8 lg:p-10 animate-breathing" style={{ animationDelay: "0.3s" }}>
               <span className="inline-block rounded-full bg-amber-500 px-4 py-1.5 text-sm font-medium text-white">
                 {isEn ? "For Public" : "জনগণের জন্য"}
               </span>
@@ -347,11 +377,11 @@ export default function ApproachPage() {
               <ul className="mt-6 space-y-3">
                 {(isEn
                   ? [
-                      "Learn about the crisis",
-                      "Support through donations",
-                      "Volunteer opportunities",
-                      "Share and spread awareness",
-                    ]
+                    "Learn about the crisis",
+                    "Support through donations",
+                    "Volunteer opportunities",
+                    "Share and spread awareness",
+                  ]
                   : ["সংকট সম্পর্কে জানুন", "দানের মাধ্যমে সহায়তা", "স্বেচ্ছাসেবক সুযোগ", "সচেতনতা ভাগ করুন এবং ছড়িয়ে দিন"]
                 ).map((item, index) => (
                   <li key={index} className="flex items-center gap-3">

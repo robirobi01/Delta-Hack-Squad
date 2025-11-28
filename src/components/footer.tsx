@@ -22,7 +22,7 @@ export function Footer() {
   ]
 
   return (
-    <footer className="border-t border-emerald-600/10 bg-gradient-to-b from-emerald-900 to-emerald-950">
+    <footer className="border-t border-emerald-600/10 bg-gradient-to-b bg-[#050C18]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}

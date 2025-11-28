@@ -160,6 +160,35 @@ export default function ProblemPage() {
 
   return (
     <div className="flex flex-col">
+      <style>{`
+        @keyframes breathing {
+          0%, 100% {
+            opacity: 0.8;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.05);
+          }
+        }
+
+        @keyframes breathingGlow {
+          0%, 100% {
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.6);
+          }
+        }
+
+        .animate-breathing {
+          animation: breathing 4s ease-in-out infinite;
+        }
+
+        .animate-breathing-glow {
+          animation: breathingGlow 4s ease-in-out infinite;
+        }
+      `}</style>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 py-20 lg:py-28">
         <div className="absolute inset-0 opacity-20">
@@ -189,7 +218,7 @@ export default function ProblemPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {mainStats.map((stat, index) => (
-              <div key={index} className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6 text-center">
+              <div key={index} className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6 text-center animate-breathing" style={{ animationDelay: `${index * 0.15}s` }}>
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-100">
                   <stat.icon className="h-7 w-7 text-emerald-600" />
                 </div>
@@ -223,7 +252,7 @@ export default function ProblemPage() {
               <div className="grid gap-6 lg:grid-cols-5">
                 {supplyChainLosses.map((stage, index) => (
                   <div key={index} className="relative text-center">
-                    <div className="relative z-10 mx-auto mb-4 flex h-32 w-32 flex-col items-center justify-center rounded-full border-4 border-emerald-200 bg-white shadow-lg">
+                    <div className="relative z-10 mx-auto mb-4 flex h-32 w-32 flex-col items-center justify-center rounded-full border-4 border-emerald-200 bg-white shadow-lg animate-breathing" style={{ animationDelay: `${index * 0.2}s` }}>
                       <stage.icon className="h-10 w-10 text-emerald-600" />
                       <span className="mt-2 text-lg font-bold text-amber-500">{stage.lossRange}</span>
                     </div>
@@ -271,7 +300,7 @@ export default function ProblemPage() {
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-square overflow-hidden rounded-2xl shadow-xl">
+              <div className="aspect-square overflow-hidden rounded-2xl shadow-xl animate-breathing">
                 <img src="/placeholder.svg?height=600&width=600" alt="" className="h-full w-full object-cover" />
               </div>
             </div>
@@ -295,7 +324,7 @@ export default function ProblemPage() {
           />
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {lossReasons.map((reason, index) => (
-              <div key={index} className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+              <div key={index} className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur animate-breathing" style={{ animationDelay: `${index * 0.15}s` }}>
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/20">
                   <reason.icon className="h-6 w-6 text-amber-400" />
                 </div>
@@ -315,13 +344,13 @@ export default function ProblemPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="order-2 lg:order-1">
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="overflow-hidden rounded-2xl shadow-lg">
+                <div className="overflow-hidden rounded-2xl shadow-lg animate-breathing">
                   <img src="/placeholder.svg?height=300&width=300" alt="" className="h-full w-full object-cover" />
                 </div>
-                <div className="overflow-hidden rounded-2xl shadow-lg">
+                <div className="overflow-hidden rounded-2xl shadow-lg animate-breathing" style={{ animationDelay: "0.3s" }}>
                   <img src="/placeholder.svg?height=300&width=300" alt="" className="h-full w-full object-cover" />
                 </div>
-                <div className="overflow-hidden rounded-2xl shadow-lg sm:col-span-2">
+                <div className="overflow-hidden rounded-2xl shadow-lg sm:col-span-2 animate-breathing" style={{ animationDelay: "0.6s" }}>
                   <img src="/placeholder.svg?height=200&width=600" alt="" className="h-48 w-full object-cover" />
                 </div>
               </div>

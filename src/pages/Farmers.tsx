@@ -18,6 +18,9 @@ import {
   Phone,
   Shield,
 } from "lucide-react"
+import bgPhoto from "/img/bg-photo.avif"
+import ruralBangladesh from "/img/ruralBangladesh.png"
+import freetrain from "/img/freetrain.png"
 
 export default function FarmersPage() {
   const { language } = useLanguage()
@@ -158,7 +161,7 @@ export default function FarmersPage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 py-20 lg:py-28">
         <div className="absolute inset-0 opacity-20">
-          <img src="/placeholder.svg?height=600&width=1600" alt="" className="h-full w-full object-cover" />
+          <img src={bgPhoto} alt="Background" className="h-full w-full object-cover" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -194,7 +197,7 @@ export default function FarmersPage() {
             </div>
             <div className="relative hidden lg:block">
               <div className="overflow-hidden rounded-2xl shadow-2xl">
-                <img src="/placeholder.svg?height=500&width=500" alt="" className="h-full w-full object-cover" />
+                <img src={ruralBangladesh} alt="Rural Bangladesh" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -304,7 +307,7 @@ export default function FarmersPage() {
             </div>
             <div className="relative">
               <div className="overflow-hidden rounded-2xl shadow-xl">
-                <img src="/placeholder.svg?height=500&width=600" alt="" className="h-full w-full object-cover" />
+                <img src={freetrain} alt="Training Resources" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>

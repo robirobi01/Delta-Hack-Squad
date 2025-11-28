@@ -4,7 +4,8 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/language-context"
-import { Sprout, User, Phone, MapPin, Map, ArrowRight, CheckCircle } from "lucide-react"
+import { Sprout, User, Phone, MapPin, Map, ArrowRight, CheckCircle, Lock, Mail } from "lucide-react"
+import gatherImg from "/img/gather.png"
 
 const divisions = ["Barishal", "Chattogram", "Dhaka", "Khulna", "Mymensingh", "Rajshahi", "Rangpur", "Sylhet"]
 const divisionsBn = ["বরিশাল", "চট্টগ্রাম", "ঢাকা", "খুলনা", "ময়মনসিংহ", "রাজশাহী", "রংপুর", "সিলেট"]
@@ -15,14 +16,42 @@ export default function LoginPage() {
   const isEn = language === "en"
 
   const [isLogin, setIsLogin] = useState(true)
-  const [formData, setFormData] = useState({ name: "", phone: "", division: "", area: "" })
+  const [formData, setFormData] = useState({ name: "", phone: "", password: "", division: "", area: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+
+    // Simple validation
+    if (isLogin) {
+      // For login: check phone and password
+      if (!formData.phone || !formData.password) {
+        alert(isEn ? "Please enter phone and password" : "অনুগ্রহ করে ফোন এবং পাসওয়ার্ড লিখুন")
+        setIsSubmitting(false)
+        return
+      }
+    } else {
+      // For registration: check all fields
+      if (!formData.name || !formData.phone || !formData.password || !formData.division || !formData.area) {
+        alert(isEn ? "Please fill all fields" : "অনুগ্রহ করে সব ক্ষেত্র পূরণ করুন")
+        setIsSubmitting(false)
+        return
+      }
+    }
+
+    // Store auth state in localStorage
+    localStorage.setItem('isAuthenticated', 'true')
+    localStorage.setItem('userPhone', formData.phone)
+
     await new Promise((resolve) => setTimeout(resolve, 1500))
     navigate("/dashboard")
+  }
+
+  const handleGmailLogin = () => {
+    alert(isEn
+      ? "Gmail login will be available soon!"
+      : "জিমেইল লগইন শীঘ্রই উপলব্ধ হবে!")
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -114,6 +143,26 @@ export default function LoginPage() {
               </div>
             </div>
 
+            <div>
+              <label htmlFor="password" className="mb-2 block text-sm font-medium text-emerald-800">
+                {isEn ? "Password" : "পাসওয়ার্ড"}
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-lg border border-emerald-200 bg-emerald-50 py-3 pl-12 pr-4 text-sm text-emerald-800 placeholder-gray-400 focus:border-amber-400 focus:outline-none focus:ring-1 focus:ring-amber-400"
+                  placeholder={isEn ? "Enter your password" : "আপনার পাসওয়ার্ড লিখুন"}
+                  minLength={6}
+                />
+              </div>
+            </div>
+
             {!isLogin && (
               <>
                 <div>
@@ -185,6 +234,28 @@ export default function LoginPage() {
                 </>
               )}
             </Button>
+
+            {/* Divider */}
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-emerald-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-4 text-gray-500">
+                  {isEn ? "Or continue with" : "অথবা চালিয়ে যান"}
+                </span>
+              </div>
+            </div>
+
+            {/* Gmail Login Button */}
+            <button
+              type="button"
+              onClick={handleGmailLogin}
+              className="w-full flex items-center justify-center gap-3 rounded-lg border-2 border-emerald-200 bg-white py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-emerald-50 hover:border-emerald-300"
+            >
+              <Mail className="h-5 w-5 text-red-500" />
+              {isEn ? "Continue with Gmail" : "জিমেইল দিয়ে চালিয়ে যান"}
+            </button>
           </form>
 
           {/* Benefits */}
@@ -222,7 +293,7 @@ export default function LoginPage() {
       <div className="hidden bg-gradient-to-br from-emerald-600 to-emerald-800 lg:block lg:w-1/2">
         <div className="relative flex h-full items-center justify-center p-12">
           <div className="absolute inset-0 opacity-20">
-            <img src="/placeholder.svg?height=1000&width=800" alt="" className="h-full w-full object-cover" />
+            <img src={gatherImg} alt="Farmers gathering" className="h-full w-full object-cover" />
           </div>
           <div className="relative z-10 max-w-lg text-center">
             <h2 className="font-serif text-4xl font-bold text-white">

@@ -1,6 +1,6 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { Menu, X, Sprout } from "lucide-react"
+import { Menu, X, Sprout, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LanguageToggle } from "@/components/language-toggle"
 import { useLanguage } from "@/lib/language-context"
@@ -23,6 +23,15 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const { t } = useLanguage()
   const location = useLocation()
+  const navigate = useNavigate()
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated')
+    localStorage.removeItem('userPhone')
+    navigate('/')
+    setIsOpen(false)
+  }
 
   // Check if a link is active
   const isActive = (href: string) => {
@@ -62,11 +71,22 @@ export function Navbar() {
         {/* Desktop Right Actions */}
         <div className="hidden items-center gap-2 lg:flex">
           <LanguageToggle />
-          <Link to="/login">
-            <Button size="sm" className="rounded-full bg-white text-[#1a1a1a] hover:bg-white/90 font-medium">
-              {t("nav.login")}
+          {isAuthenticated ? (
+            <Button
+              size="sm"
+              onClick={handleLogout}
+              className="rounded-full bg-white text-[#1a1a1a] hover:bg-white/90 font-medium flex items-center gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              {t("nav.logout")}
             </Button>
-          </Link>
+          ) : (
+            <Link to="/login">
+              <Button size="sm" className="rounded-full bg-white text-[#1a1a1a] hover:bg-white/90 font-medium">
+                {t("nav.login")}
+              </Button>
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -106,11 +126,21 @@ export function Navbar() {
             </Link>
           ))}
           <div className="flex flex-col gap-2 pt-4">
-            <Link to="/login" onClick={() => setIsOpen(false)}>
-              <Button className="w-full rounded-full bg-white text-[#1a1a1a] hover:bg-white/90">
-                {t("nav.login")}
+            {isAuthenticated ? (
+              <Button
+                onClick={handleLogout}
+                className="w-full rounded-full bg-white text-[#1a1a1a] hover:bg-white/90 flex items-center justify-center gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                {t("nav.logout")}
               </Button>
-            </Link>
+            ) : (
+              <Link to="/login" onClick={() => setIsOpen(false)}>
+                <Button className="w-full rounded-full bg-white text-[#1a1a1a] hover:bg-white/90">
+                  {t("nav.login")}
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

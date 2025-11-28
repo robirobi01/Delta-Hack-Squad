@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { LanguageProvider } from '@/lib/language-context'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
+import ScrollToTop from '@/components/ScrollToTop'
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('@/pages/Home'))
@@ -27,10 +29,12 @@ const Loading = () => (
     </div>
 )
 
+
 export default function App() {
     return (
         <LanguageProvider>
             <div className="flex flex-col min-h-screen font-sans antialiased">
+                <ScrollToTop />
                 <Navbar />
                 <main className="grow">
                     <Suspense fallback={<Loading />}>
@@ -39,8 +43,16 @@ export default function App() {
                             <Route path="/about" element={<AboutPage />} />
                             <Route path="/problem" element={<ProblemPage />} />
                             <Route path="/approach" element={<ApproachPage />} />
-                            <Route path="/dashboard" element={<DashboardPage />} />
-                            <Route path="/chatbot" element={<ChatbotPage />} />
+                            <Route path="/dashboard" element={
+                                <ProtectedRoute>
+                                    <DashboardPage />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/chatbot" element={
+                                <ProtectedRoute>
+                                    <ChatbotPage />
+                                </ProtectedRoute>
+                            } />
                             <Route path="/farmers" element={<FarmersPage />} />
                             <Route path="/public" element={<PublicPage />} />
                             <Route path="/roadmap" element={<RoadmapPage />} />

@@ -22,6 +22,7 @@ export const translations: Translations = {
   "nav.roadmap": { en: "Roadmap", bn: "রোডম্যাপ" },
   "nav.contact": { en: "Contact", bn: "যোগাযোগ" },
   "nav.login": { en: "Login", bn: "লগইন" },
+  "nav.logout": { en: "Logout", bn: "লগআউট" },
   "nav.getInvolved": { en: "Get Involved", bn: "যুক্ত হোন" },
 
   // Hero Section

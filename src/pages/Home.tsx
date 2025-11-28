@@ -28,6 +28,7 @@ import farmerThree from "/img/FarmerThree.jpg"
 import farmerFour from "/img/FarmerFour.jpg"
 import weatherImg from "/img/weather.png"
 import riceImg from "/img/rice.png"
+import villageWomen from "/img/Village women.png"
 import bgPhoto from "/img/bg-photo.avif"
 export default function HomePage() {
     const { t, language } = useLanguage()
@@ -483,8 +484,8 @@ export default function HomePage() {
 
             {/* CTA Section */}
             < section className="relative overflow-hidden bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 py-24" >
-                <div className="absolute inset-0 opacity-20">
-                    <Image src="/placeholder.svg?height=400&width=1600" alt="" fill className="object-cover" />
+                <div className="absolute inset-0 opacity-25">
+                    <Image src={villageWomen} alt="Village women" fill className="object-cover brightness-75" />
                 </div>
                 <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
                     <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl lg:text-5xl text-balance">

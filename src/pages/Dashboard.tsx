@@ -1,13 +1,13 @@
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { WeatherWidget } from "@/components/weather-widget"
 import { TipsCard } from "@/components/tips-card"
 import { AlertsCard } from "@/components/alerts-card"
 import { MarketPricesCard } from "@/components/market-prices-card"
 import { useLanguage } from "@/lib/language-context"
-import { User, MessageCircle, BookOpen, Settings, ArrowRight, Warehouse, Phone, Plus, Pencil, Trash2 } from "lucide-react"
+import { User, MessageCircle, BookOpen, ArrowRight, Warehouse, Phone, Plus, Pencil, Trash2, LogOut } from "lucide-react"
 
 interface CropBatch {
     id: number
@@ -22,6 +22,13 @@ interface CropBatch {
 export default function DashboardPage() {
     const { language } = useLanguage()
     const isEn = language === "en"
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        localStorage.removeItem('isAuthenticated')
+        localStorage.removeItem('userPhone')
+        navigate('/')
+    }
 
     // Crop Registration State
     const [showAddCrop, setShowAddCrop] = useState(false)
@@ -190,8 +197,8 @@ export default function DashboardPage() {
                                     {isEn ? "Ask AI Assistant" : "এআই সহকারীকে জিজ্ঞাসা করুন"}
                                 </Button>
                             </Link>
-                            <Button variant="outline" size="icon" className="border-emerald-200 bg-transparent">
-                                <Settings className="h-4 w-4 text-gray-500" />
+                            <Button variant="outline" size="icon" className="border-emerald-200 bg-transparent" onClick={handleLogout} title={isEn ? "Logout" : "লগআউট"}>
+                                <LogOut className="h-4 w-4 text-gray-500" />
                             </Button>
                         </div>
                     </div>

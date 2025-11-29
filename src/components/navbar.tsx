@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/problem", labelKey: "nav.problem" },
   { href: "/approach", labelKey: "nav.approach" },
   { href: "/dashboard", labelKey: "nav.dashboard" },
+  { href: "/scanner", labelKey: "Scanner" },
   { href: "/local-risk", labelKey: "nav.localRisk" },
   { href: "/chatbot", labelKey: "nav.chatbot" },
   { href: "/farmers", labelKey: "nav.farmers" },

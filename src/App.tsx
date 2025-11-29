@@ -21,6 +21,7 @@ const PublicPage = lazy(() => import('@/pages/Public'))
 const RoadmapPage = lazy(() => import('@/pages/Roadmap'))
 const ContactPage = lazy(() => import('@/pages/Contact'))
 const LoginPage = lazy(() => import('@/pages/Login'))
+const ScannerPage = lazy(() => import('@/pages/Scanner'))
 const StorageGuidePage = lazy(() => import('@/pages/StorageGuide'))
 const ResourcesPage = lazy(() => import('@/pages/Resources'))
 
@@ -71,6 +72,7 @@ export default function App() {
                                 <Route path="/roadmap" element={<RoadmapPage />} />
                                 <Route path="/contact" element={<ContactPage />} />
                                 <Route path="/login" element={<LoginPage />} />
+                                <Route path="/scanner" element={<ScannerPage />} />
                                 <Route path="/storage-guide" element={
                                     <ProtectedRoute>
                                         <StorageGuidePage />

@@ -1,17 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { Camera, X } from 'lucide-react';
 
 const CropDoctor = () => {
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
+    const [showCamera, setShowCamera] = useState(false);
+
+    const videoRef = useRef(null);
+    const canvasRef = useRef(null);
+    const streamRef = useRef(null);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setImage(file);
             setPreview(URL.createObjectURL(file));
-            setData(null); // Reset previous results
+            setData(null);
+        }
+    };
+
+    const startCamera = async () => {
+        try {
+            setShowCamera(true);
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+            streamRef.current = stream;
+            // Wait for state update and ref to be available
+            setTimeout(() => {
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
+                }
+            }, 100);
+        } catch (err) {
+            console.error("Error accessing camera:", err);
+            alert("ক্যামেরা চালু করা যাচ্ছে না। অনুমতি আছে কিনা দেখুন।");
+            setShowCamera(false);
+        }
+    };
+
+    const stopCamera = () => {
+        if (streamRef.current) {
+            streamRef.current.getTracks().forEach(track => track.stop());
+            streamRef.current = null;
+        }
+        setShowCamera(false);
+    };
+
+    const captureImage = () => {
+        if (videoRef.current && canvasRef.current) {
+            const video = videoRef.current;
+            const canvas = canvasRef.current;
+
+            // Set canvas dimensions to match video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Draw video frame to canvas
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert to blob/file
+            canvas.toBlob((blob) => {
+                const file = new File([blob], "captured_crop.jpg", { type: "image/jpeg" });
+                setImage(file);
+                setPreview(URL.createObjectURL(file));
+                setData(null);
+                stopCamera();
+            }, 'image/jpeg');
         }
     };
 
@@ -39,7 +95,6 @@ const CropDoctor = () => {
         }
     };
 
-    // Helper to determine badge color
     const getRiskColor = (level) => {
         if (level === 'High') return 'bg-red-500';
         if (level === 'Medium') return 'bg-yellow-500';
@@ -52,26 +107,65 @@ const CropDoctor = () => {
                 🌾 ফসলের ডাক্তার (Crop Doctor)
             </h1>
 
+            {/* Camera Modal */}
+            {showCamera && (
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex flex-col items-center justify-center p-4">
+                    <div className="relative w-full max-w-md bg-black rounded-lg overflow-hidden">
+                        <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            className="w-full h-[60vh] object-cover"
+                        />
+                        <canvas ref={canvasRef} className="hidden" />
+
+                        <button
+                            onClick={stopCamera}
+                            className="absolute top-4 right-4 text-white bg-gray-800 p-2 rounded-full"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        <div className="absolute bottom-6 left-0 right-0 flex justify-center">
+                            <button
+                                onClick={captureImage}
+                                className="w-16 h-16 bg-white rounded-full border-4 border-green-500 flex items-center justify-center active:scale-95 transition-transform"
+                            >
+                                <div className="w-12 h-12 bg-green-500 rounded-full" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Upload Section */}
             <div className="bg-white p-4 rounded-xl shadow-md mb-6">
-                <div className="border-2 border-dashed border-green-300 rounded-lg p-6 flex flex-col items-center justify-center bg-green-50">
+                <div className="border-2 border-dashed border-green-300 rounded-lg p-6 flex flex-col items-center justify-center bg-green-50 relative">
                     {preview ? (
                         <img src={preview} alt="Crop" className="h-48 object-cover rounded-md mb-4" />
                     ) : (
                         <div className="text-gray-400 mb-2 text-6xl">📸</div>
                     )}
-                    
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="block w-full text-sm text-slate-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-green-50 file:text-green-700
-                        hover:file:bg-green-100"
-                    />
+
+                    <div className="flex gap-2 w-full mt-2">
+                        <label className="flex-1 cursor-pointer bg-white border border-green-500 text-green-700 py-2 px-4 rounded-lg text-center font-semibold hover:bg-green-50 transition-colors">
+                            ফাইল আপলোড
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                className="hidden"
+                            />
+                        </label>
+
+                        <button
+                            onClick={startCamera}
+                            className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+                        >
+                            <Camera className="w-4 h-4" />
+                            ক্যামেরা
+                        </button>
+                    </div>
                 </div>
 
                 <button

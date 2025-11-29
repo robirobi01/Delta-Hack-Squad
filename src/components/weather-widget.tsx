@@ -1,8 +1,10 @@
 
-
+import { useState, useEffect } from "react"
 import { CloudSun, Cloud, CloudRain, Sun, Wind, Droplets } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
+import { fetchLiveWeather, WeatherDataItem } from "@/services/weatherApiService"
 
+// Static fallback data for compatibility
 export const weatherData = [
   {
     day: "Today",
@@ -29,11 +31,36 @@ export const weatherData = [
   { day: "Sun", dayBn: "রবি", temp: 31, condition: "Sunny", conditionBn: "রোদ্রজ্জ্বল", icon: Sun, humidity: 60 },
 ]
 
-export function WeatherWidget() {
+interface WeatherWidgetProps {
+  location?: string;
+}
+
+export function WeatherWidget({ location = "Rangpur" }: WeatherWidgetProps) {
   const { language } = useLanguage()
   const isEn = language === "en"
-  const today = weatherData[0]
-  const forecast = weatherData.slice(1)
+
+  const [liveWeatherData, setLiveWeatherData] = useState<WeatherDataItem[]>(weatherData)
+  const [locationName, setLocationName] = useState(location)
+
+  useEffect(() => {
+    const loadWeather = async () => {
+      if (!location) return;
+
+      try {
+        const data = await fetchLiveWeather(location)
+        setLiveWeatherData(data)
+        setLocationName(location)
+      } catch (error) {
+        console.error('Failed to load weather:', error)
+        // Keep using static data as fallback
+      }
+    }
+
+    loadWeather()
+  }, [location])
+
+  const today = liveWeatherData[0]
+  const forecast = liveWeatherData.slice(1)
 
   return (
     <div className="rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm">
@@ -44,7 +71,9 @@ export function WeatherWidget() {
       {/* Current Weather */}
       <div className="mb-6 flex items-center justify-between rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 p-6 text-white shadow-lg">
         <div>
-          <p className="text-sm text-white/80">{isEn ? "Rangpur District" : "রংপুর জেলা"}</p>
+          <p className="text-sm text-white/80">
+            {isEn ? `${locationName} District` : `${locationName} জেলা`}
+          </p>
           <p className="font-serif text-4xl font-bold">{today.temp}°C</p>
           <p className="mt-1 text-white/90">{isEn ? today.condition : today.conditionBn}</p>
         </div>

@@ -308,7 +308,7 @@ export default function DashboardPage() {
                 <div className="grid gap-6 lg:grid-cols-3">
                     {/* Left Column - Weather */}
                     <div className="lg:col-span-2">
-                        <WeatherWidget />
+                        <WeatherWidget location={userData?.area || userData?.division || "Rangpur"} />
                     </div>
 
                     {/* Right Column - Alerts */}

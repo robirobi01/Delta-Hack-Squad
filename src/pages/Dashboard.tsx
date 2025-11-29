@@ -316,11 +316,6 @@ export default function DashboardPage() {
                         <AlertsCard />
                     </div>
 
-                    {/* Smart Alert System */}
-                    <div>
-                        <SmartAlert registeredCrops={registeredCrops} />
-                    </div>
-
                     {/* Crop Registration */}
                     <div className="lg:col-span-2 rounded-2xl border border-emerald-100 bg-white p-6 shadow-sm">
                         <div className="flex items-center justify-between mb-4">
@@ -565,6 +560,13 @@ export default function DashboardPage() {
                                 <p className="text-sm">
                                     {isEn ? "No crop batches registered yet. Click '+ Add Crop' to get started." : "এখনও কোনো ফসলের ব্যাচ নিবন্ধিত হয়নি। শুরু করতে '+ ফসল যোগ করুন' ক্লিক করুন।"}
                                 </p>
+                            </div>
+                        )}
+
+                        {/* Smart Alert Button - Only show if crops are registered */}
+                        {registeredCrops.length > 0 && (
+                            <div className="mt-6 pt-6 border-t border-emerald-100">
+                                <SmartAlert registeredCrops={registeredCrops} />
                             </div>
                         )}
                     </div>

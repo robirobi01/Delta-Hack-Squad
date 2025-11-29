@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { WeatherWidget } from "@/components/weather-widget"
-import { TipsCard } from "@/components/tips-card"
+import SmartAlert from "@/components/SmartAlert"
 import { AlertsCard } from "@/components/alerts-card"
 import { MarketPricesCard } from "@/components/market-prices-card"
 import { useLanguage } from "@/lib/language-context"
@@ -308,17 +308,12 @@ export default function DashboardPage() {
                 <div className="grid gap-6 lg:grid-cols-3">
                     {/* Left Column - Weather */}
                     <div className="lg:col-span-2">
-                        <WeatherWidget />
+                        <WeatherWidget location={userData?.area || userData?.division || "Rangpur"} />
                     </div>
 
                     {/* Right Column - Alerts & Risk Report */}
                     <div className="space-y-6">
                         <AlertsCard />
-                    </div>
-
-                    {/* Tips */}
-                    <div>
-                        <TipsCard />
                     </div>
 
                     {/* Crop Registration */}
@@ -565,6 +560,13 @@ export default function DashboardPage() {
                                 <p className="text-sm">
                                     {isEn ? "No crop batches registered yet. Click '+ Add Crop' to get started." : "এখনও কোনো ফসলের ব্যাচ নিবন্ধিত হয়নি। শুরু করতে '+ ফসল যোগ করুন' ক্লিক করুন।"}
                                 </p>
+                            </div>
+                        )}
+
+                        {/* Smart Alert Button - Only show if crops are registered */}
+                        {registeredCrops.length > 0 && (
+                            <div className="mt-6 pt-6 border-t border-emerald-100">
+                                <SmartAlert registeredCrops={registeredCrops} />
                             </div>
                         )}
                     </div>

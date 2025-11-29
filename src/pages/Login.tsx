@@ -28,7 +28,9 @@ export default function LoginPage() {
     setIsSubmitting(true)
 
     try {
-      const email = `${formData.phone}@harvestguard.com`
+      // Sanitize phone number for email (remove spaces, dashes, parentheses)
+      const sanitizedPhone = formData.phone.replace(/[\s\-()]/g, "")
+      const email = `${sanitizedPhone}@harvestguard.com`
 
       if (isLogin) {
         // Login
@@ -72,6 +74,9 @@ export default function LoginPage() {
         errorMessage = isEn ? "User already exists" : "ব্যবহারকারী ইতিমধ্যে বিদ্যমান"
       } else if (error.code === 'auth/weak-password') {
         errorMessage = isEn ? "Password should be at least 6 characters" : "পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে"
+      } else {
+        // Show the actual error for debugging
+        errorMessage = `${errorMessage}: ${error.code} - ${error.message}`
       }
 
       alert(errorMessage)
@@ -318,6 +323,7 @@ export default function LoginPage() {
               ? "By continuing, you agree to our Terms of Service and Privacy Policy."
               : "চালিয়ে যাওয়ার মাধ্যমে, আপনি আমাদের সেবার শর্তাবলী এবং গোপনীয়তা নীতিতে সম্মত হচ্ছেন।"}
           </p>
+          <p className="mt-2 text-center text-xs text-gray-400">v1.2</p>
         </div>
       </div>
 

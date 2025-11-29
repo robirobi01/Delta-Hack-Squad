@@ -1,4 +1,3 @@
-import React from 'react';
 import { CropType } from './types';
 
 export const UPAZILAS = [
@@ -21,6 +20,11 @@ export const CROPS = [
     { id: CropType.VEGETABLE, name: "সবজি", icon: "🍆" },
     { id: CropType.JUTE, name: "পাট", icon: "🌿" },
     { id: CropType.CORN, name: "ভুট্টা", icon: "🌽" },
+    { id: CropType.MUSTARD, name: "সরিষা", icon: "🌼" },
+    { id: CropType.LENTIL, name: "মসুর ডাল", icon: "🥘" },
+    { id: CropType.SUGARCANE, name: "আঁখ", icon: "🎋" },
+    { id: CropType.CHILI, name: "মরিচ", icon: "🌶️" },
+    { id: CropType.GARLIC, name: "রসুন", icon: "🧄" },
 ];
 
 // Simple SVG Icons

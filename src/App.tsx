@@ -6,6 +6,7 @@ import { LanguageProvider } from '@/lib/language-context'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 import ScrollToTop from '@/components/ScrollToTop'
 import { VoiceAssistant } from '@/components/VoiceAssistant'
+import { Toaster } from 'sonner'
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('@/pages/Home'))
@@ -20,6 +21,8 @@ const PublicPage = lazy(() => import('@/pages/Public'))
 const RoadmapPage = lazy(() => import('@/pages/Roadmap'))
 const ContactPage = lazy(() => import('@/pages/Contact'))
 const LoginPage = lazy(() => import('@/pages/Login'))
+const StorageGuidePage = lazy(() => import('@/pages/StorageGuide'))
+const ResourcesPage = lazy(() => import('@/pages/Resources'))
 
 // Loading component
 const Loading = () => (
@@ -68,13 +71,24 @@ export default function App() {
                                 <Route path="/roadmap" element={<RoadmapPage />} />
                                 <Route path="/contact" element={<ContactPage />} />
                                 <Route path="/login" element={<LoginPage />} />
+                                <Route path="/storage-guide" element={
+                                    <ProtectedRoute>
+                                        <StorageGuidePage />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/resources" element={
+                                    <ProtectedRoute>
+                                        <ResourcesPage />
+                                    </ProtectedRoute>
+                                } />
                             </Routes>
                         </Suspense>
                     </main>
                     <Footer />
                     <VoiceAssistant />
-                </div>
-            </LanguageProvider>
-        </AuthProvider>
+                    <Toaster />
+                </div >
+            </LanguageProvider >
+        </AuthProvider >
     )
 }

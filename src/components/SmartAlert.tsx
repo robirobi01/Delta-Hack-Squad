@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { CROPS } from '../constants';
 import { CropType, AdvisoryResult } from '../types';
 import { generateFarmingAdvisory } from '../services/geminiService';
 import { Button } from "@/components/ui/button";
@@ -39,14 +38,16 @@ const SmartAlert: React.FC<SmartAlertProps> = ({ registeredCrops = [] }) => {
             // Analyze each registered crop
             const results = await Promise.all(
                 registeredCrops.map(async (crop) => {
+                    const condition = current.condition.toLowerCase().includes('rain') ? 'rainy' :
+                        current.condition.toLowerCase().includes('cloud') ? 'cloudy' : 'sunny';
+
                     const syncedWeather = {
                         location: crop.district || 'Rangpur',
                         temperature: `${current.temp}°C`,
                         humidity: `${current.humidity}%`,
                         rainChance: current.condition.includes('Rain') || current.condition.includes('Cloud') ? '80%' : '10%',
                         forecast: [],
-                        condition: current.condition.toLowerCase().includes('rain') ? 'rainy' :
-                            current.condition.toLowerCase().includes('cloud') ? 'cloudy' : 'sunny'
+                        condition: condition as "sunny" | "rainy" | "cloudy" | "stormy"
                     };
 
                     const cropType = mapCropTypeToEnum(crop.cropType);
@@ -134,8 +135,8 @@ const SmartAlert: React.FC<SmartAlertProps> = ({ registeredCrops = [] }) => {
                                     <div
                                         key={index}
                                         className={`p-4 rounded-xl border-l-4 ${result.advisory.isCritical
-                                                ? 'bg-red-50 border-red-500'
-                                                : 'bg-green-50 border-green-500'
+                                            ? 'bg-red-50 border-red-500'
+                                            : 'bg-green-50 border-green-500'
                                             }`}
                                     >
                                         <div className="flex items-start justify-between mb-2">
@@ -149,8 +150,8 @@ const SmartAlert: React.FC<SmartAlertProps> = ({ registeredCrops = [] }) => {
                                                 </p>
                                             </div>
                                             <span className={`text-xs font-bold px-2 py-1 rounded ${result.advisory.isCritical
-                                                    ? 'bg-red-100 text-red-700'
-                                                    : 'bg-green-100 text-green-700'
+                                                ? 'bg-red-100 text-red-700'
+                                                : 'bg-green-100 text-green-700'
                                                 }`}>
                                                 {result.advisory.isCritical
                                                     ? (isEn ? "CRITICAL" : "জরুরি")

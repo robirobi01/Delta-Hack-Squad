@@ -21,6 +21,11 @@ export enum CropType {
     VEGETABLE = 'সবজি',
     JUTE = 'পাট',
     CORN = 'ভুট্টা',
+    MUSTARD = 'সরিষা',
+    LENTIL = 'মসুর ডাল',
+    SUGARCANE = 'আঁখ',
+    CHILI = 'মরিচ',
+    GARLIC = 'রসুন',
 }
 
 export interface AdvisoryResult {

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { WeatherWidget } from "@/components/weather-widget"
-import { TipsCard } from "@/components/tips-card"
+import SmartAlert from "@/components/SmartAlert"
 import { AlertsCard } from "@/components/alerts-card"
 import { MarketPricesCard } from "@/components/market-prices-card"
 import { useLanguage } from "@/lib/language-context"
@@ -278,9 +278,9 @@ export default function DashboardPage() {
                         <AlertsCard />
                     </div>
 
-                    {/* Tips */}
+                    {/* Smart Alert System */}
                     <div>
-                        <TipsCard />
+                        <SmartAlert registeredCrops={registeredCrops} />
                     </div>
 
                     {/* Crop Registration */}

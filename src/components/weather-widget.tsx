@@ -3,7 +3,7 @@
 import { CloudSun, Cloud, CloudRain, Sun, Wind, Droplets } from "lucide-react"
 import { useLanguage } from "@/lib/language-context"
 
-const weatherData = [
+export const weatherData = [
   {
     day: "Today",
     dayBn: "আজ",

@@ -1,0 +1,7 @@
+{
+  "name": "Krishi Bondhu - Voice Interface",
+  "description": "A touchless, voice-first agricultural assistant for Bangladeshi farmers using Gemini and Web Speech API.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

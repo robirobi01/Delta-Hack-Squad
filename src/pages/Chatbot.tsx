@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/language-context"
 import { Bot, User, Sparkles, ArrowLeft, Camera, Image as ImageIcon } from "lucide-react"
+import { analyzeCropFreshness } from "@/services/cropAnalysisService"
 
 interface Message {
   id: number
@@ -61,18 +62,47 @@ export default function ChatbotPage() {
     setMessages((prev) => [...prev, userMessage])
     setIsProcessing(true)
 
-    // Simulate AI processing (replace with actual API call)
-    setTimeout(() => {
+    try {
+      // Real AI analysis using Gemini Vision API
+      const analysis = await analyzeCropFreshness(file, language)
+
+      // Format response based on freshness status
+      let statusEmoji = '✅'
+      let statusColor = 'Fresh'
+
+      if (analysis.status === 'Rotten') {
+        statusEmoji = '🚨'
+        statusColor = 'Rotten'
+      } else if (analysis.status === 'Partially Damaged') {
+        statusEmoji = '⚠️'
+        statusColor = 'Partially Damaged'
+      }
+
+      const responseContent = isEn
+        ? `${statusEmoji} **Status: ${statusColor}** (${analysis.confidence}% confidence)\n\n${analysis.details}\n\n**Recommendations:**\n${analysis.recommendations.map((r, i) => `${i + 1}. ${r}`).join('\n')}\n\nWould you like to upload another image for analysis?`
+        : `${statusEmoji} **অবস্থা: ${analysis.status === 'Fresh' ? 'তাজা' : analysis.status === 'Rotten' ? 'পচা' : 'আংশিক ক্ষতিগ্রস্ত'}** (${analysis.confidence}% নিশ্চিত)\n\n${analysis.details}\n\n**সুপারিশ:**\n${analysis.recommendations.map((r, i) => `${i + 1}. ${r}`).join('\n')}\n\nআপনি কি বিশ্লেষণের জন্য আরেকটি ছবি আপলোড করতে চান?`
+
       const assistantMessage: Message = {
         id: messages.length + 2,
         role: "assistant",
-        content: isEn
-          ? "Thank you for uploading the image! I can see your crop/pest/storage condition. Based on the image:\n\n• This appears to be a common agricultural scenario\n• I recommend proper monitoring and care\n• Consider consulting with local agricultural experts for detailed analysis\n\nWould you like to upload another image for analysis?"
-          : "ছবি আপলোড করার জন্য ধন্যবাদ! আমি আপনার ফসল/কীটপতঙ্গ/সংরক্ষণ অবস্থা দেখতে পাচ্ছি। ছবির উপর ভিত্তি করে:\n\n• এটি একটি সাধারণ কৃষি পরিস্থিতি বলে মনে হচ্ছে\n• আমি সঠিক পর্যবেক্ষণ এবং যত্নের সুপারিশ করি\n• বিস্তারিত বিশ্লেষণের জন্য স্থানীয় কৃষি বিশেষজ্ঞদের সাথে পরামর্শ করার কথা বিবেচনা করুন\n\nআপনি কি বিশ্লেষণের জন্য আরেকটি ছবি আপলোড করতে চান?"
+        content: responseContent
       }
       setMessages((prev) => [...prev, assistantMessage])
+    } catch (error) {
+      console.error('Analysis error:', error)
+
+      // Error fallback message
+      const errorMessage: Message = {
+        id: messages.length + 2,
+        role: "assistant",
+        content: isEn
+          ? "Sorry, I couldn't analyze the image. Please try again with a clearer photo."
+          : "দুঃখিত, আমি ছবি বিশ্লেষণ করতে পারিনি। একটি পরিষ্কার ছবি দিয়ে আবার চেষ্টা করুন।"
+      }
+      setMessages((prev) => [...prev, errorMessage])
+    } finally {
       setIsProcessing(false)
-    }, 2000)
+    }
 
     // Reset file input
     if (fileInputRef.current) {

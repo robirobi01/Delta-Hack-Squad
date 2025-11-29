@@ -5,6 +5,7 @@ import { Footer } from '@/components/footer'
 import { LanguageProvider } from '@/lib/language-context'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 import ScrollToTop from '@/components/ScrollToTop'
+import { VoiceAssistant } from '@/components/VoiceAssistant'
 
 // Lazy load pages for better performance
 const HomePage = lazy(() => import('@/pages/Home'))
@@ -71,6 +72,7 @@ export default function App() {
                         </Suspense>
                     </main>
                     <Footer />
+                    <VoiceAssistant />
                 </div>
             </LanguageProvider>
         </AuthProvider>

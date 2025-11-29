@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Camera, X } from 'lucide-react';
+import { analyzeCropFreshness } from '@/services/cropAnalysisService';
 
 const CropDoctor = () => {
     const [image, setImage] = useState(null);
@@ -71,25 +72,29 @@ const CropDoctor = () => {
         }
     };
 
+
+
     const handleAnalyze = async () => {
         if (!image) return;
 
         setLoading(true);
-        const formData = new FormData();
-        formData.append('image', image);
 
         try {
-            // Replace with your backend URL
-            const response = await fetch('http://localhost:5000/api/analyze', {
-                method: 'POST',
-                body: formData,
-            });
+            // Use client-side Gemini analysis
+            const result = await analyzeCropFreshness(image, 'bn');
 
-            const result = await response.json();
-            setData(result);
+            // Map result to component state format
+            setData({
+                pest_name: result.status === 'Fresh' ? 'সুস্থ ফসল (Fresh)' :
+                    result.status === 'Rotten' ? 'পচা/নষ্ট (Rotten)' : 'আংশিক ক্ষতিগ্রস্ত',
+                risk_level: result.status === 'Fresh' ? 'Low' :
+                    result.status === 'Rotten' ? 'High' : 'Medium',
+                diagnosis: result.details,
+                solution_steps: result.recommendations
+            });
         } catch (error) {
             console.error("Error:", error);
-            alert("সার্ভারে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+            alert("বিশ্লেষণে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
         } finally {
             setLoading(false);
         }

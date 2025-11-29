@@ -22,7 +22,7 @@ export const analyzeCropFreshness = async (
         const base64Image = await fileToBase64(imageFile);
 
         const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
         const prompt = language === 'en'
             ? `Analyze this crop/food image and determine its freshness status. 
@@ -75,16 +75,18 @@ export const analyzeCropFreshness = async (
     } catch (error) {
         console.error('Crop analysis error:', error);
 
-        // Fallback response
+        // Fallback response with error details
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
         return {
             status: 'Fresh',
             confidence: 50,
             details: language === 'en'
-                ? 'Unable to analyze image. Please try again with a clearer photo.'
-                : 'ছবি বিশ্লেষণ করতে অক্ষম। একটি পরিষ্কার ছবি দিয়ে আবার চেষ্টা করুন।',
+                ? `Unable to analyze image. Error: ${errorMessage}. Please try again.`
+                : `ছবি বিশ্লেষণ করতে অক্ষম। ত্রুটি: ${errorMessage}। আবার চেষ্টা করুন।`,
             recommendations: language === 'en'
-                ? ['Ensure good lighting', 'Take photo from closer distance', 'Focus on the crop clearly']
-                : ['ভালো আলো নিশ্চিত করুন', 'কাছ থেকে ছবি তুলুন', 'ফসলের উপর স্পষ্টভাবে ফোকাস করুন']
+                ? ['Check internet connection', 'Ensure API key is valid', 'Try a different photo']
+                : ['ইন্টারনেট সংযোগ পরীক্ষা করুন', 'API কি সঠিক কিনা দেখুন', 'অন্য ছবি চেষ্টা করুন']
         };
     }
 };

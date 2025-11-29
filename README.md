@@ -34,6 +34,18 @@ Our integrated AI Chatbot provides instant, personalized advice to farmers. Whet
 ![Achievements](img/img3.jpg)
 To encourage best practices and engagement, we've introduced a gamification system. Farmers earn badges like "Risk Mitigated Expert" or "Harvest Master" by successfully managing crops and preventing losses. Detailed statistics and visual graphs help them track their success rates over time, turning farming into a rewarding and data-driven profession.
 
+### 4. Market Insights & Fair Pricing
+![Market Insights](img/img4.jpg)
+Access real-time market data to ensure fair pricing for your produce. Stay updated with current trends and demand to maximize your profits and avoid exploitation.
+
+### 5. Weather Forecasting & Alerts
+![Weather Alerts](img/img5.jpg)
+Get precise, localized weather forecasts and severe weather alerts. Plan your farming activities with confidence, knowing when to plant, irrigate, or harvest to avoid weather-related losses.
+
+### 6. Community & Knowledge Hub
+![Community Hub](img/img6.jpg)
+Connect with a community of farmers and experts. Share experiences, ask questions, and access a vast library of agricultural knowledge to continuously improve your farming practices.
+
 ---
 
 ## ✨ Key Features

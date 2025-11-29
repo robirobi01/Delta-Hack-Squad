@@ -4,7 +4,7 @@ import { useLanguage } from '@/lib/language-context';
 import { useAuth } from '@/lib/auth-context';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = 'AIzaSyBkCBvWrFLXZbWuQYTmYdJqQnXlJKpTqFM';
+const API_KEY = 'AIzaSyBw45vFgUNx95Ta2EwyG_T9nP5izzMNxtU';
 
 export function VoiceAssistant() {
     const { language } = useLanguage();
@@ -125,7 +125,7 @@ export function VoiceAssistant() {
             User Question: "${question}"
             
             Instructions:
-            1. Answer in spoken Bangla (Bengali).
+            1. You MUST answer in Bangla (Bengali) language ONLY.
             2. Keep it concise (2-3 sentences).
             3. If they ask about THEIR crops/weather and data is missing, politely ask them to add crops/check dashboard.
             4. For general questions, give general advice.

@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = 'AIzaSyBkCBvWrFLXZbWuQYTmYdJqQnXlJKpTqFM';
+const API_KEY = 'AIzaSyBw45vFgUNx95Ta2EwyG_T9nP5izzMNxtU';
 
 export interface CropAnalysisResult {
     status: 'Fresh' | 'Rotten' | 'Partially Damaged';

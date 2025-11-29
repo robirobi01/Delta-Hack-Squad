@@ -24,6 +24,7 @@ export const translations: Translations = {
   "nav.login": { en: "Login", bn: "লগইন" },
   "nav.logout": { en: "Logout", bn: "লগআউট" },
   "nav.getInvolved": { en: "Get Involved", bn: "যুক্ত হোন" },
+  "nav.localRisk": { en: "Local Risk", bn: "স্থানীয় ঝুঁকি" },
 
   // Hero Section
   "hero.badge": { en: "Supporting SDG 12.3", bn: "SDG 12.3 সমর্থনে" },

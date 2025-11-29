@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/problem", labelKey: "nav.problem" },
   { href: "/approach", labelKey: "nav.approach" },
   { href: "/dashboard", labelKey: "nav.dashboard" },
+  { href: "/local-risk", labelKey: "nav.localRisk" },
   { href: "/chatbot", labelKey: "nav.chatbot" },
   { href: "/farmers", labelKey: "nav.farmers" },
   { href: "/public", labelKey: "nav.public" },
@@ -54,7 +55,7 @@ export function Navbar() {
 
         {/* Desktop Navigation - centered */}
         <div className="hidden items-center gap-1 lg:flex">
-          {navLinks.slice(0, 6).map((link) => (
+          {navLinks.slice(0, 7).map((link) => (
             <Link
               key={link.href}
               to={link.href}

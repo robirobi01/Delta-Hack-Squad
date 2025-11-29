@@ -311,8 +311,8 @@ export default function DashboardPage() {
                         <WeatherWidget />
                     </div>
 
-                    {/* Right Column - Alerts */}
-                    <div>
+                    {/* Right Column - Alerts & Risk Report */}
+                    <div className="space-y-6">
                         <AlertsCard />
                     </div>
 

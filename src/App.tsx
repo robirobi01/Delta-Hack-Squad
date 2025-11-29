@@ -12,6 +12,7 @@ const AboutPage = lazy(() => import('@/pages/About'))
 const ProblemPage = lazy(() => import('@/pages/Problem'))
 const ApproachPage = lazy(() => import('@/pages/Approach'))
 const DashboardPage = lazy(() => import('@/pages/Dashboard'))
+const LocalRiskPage = lazy(() => import('@/pages/LocalRisk'))
 const ChatbotPage = lazy(() => import('@/pages/Chatbot'))
 const FarmersPage = lazy(() => import('@/pages/Farmers'))
 const PublicPage = lazy(() => import('@/pages/Public'))
@@ -54,6 +55,11 @@ export default function App() {
                                 <Route path="/chatbot" element={
                                     <ProtectedRoute>
                                         <ChatbotPage />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/local-risk" element={
+                                    <ProtectedRoute>
+                                        <LocalRiskPage />
                                     </ProtectedRoute>
                                 } />
                                 <Route path="/farmers" element={<FarmersPage />} />

@@ -9,11 +9,11 @@ import { MarketPricesCard } from "@/components/market-prices-card"
 import { useLanguage } from "@/lib/language-context"
 import { User, MessageCircle, BookOpen, ArrowRight, Warehouse, Phone, Plus, Pencil, Trash2, LogOut, Download } from "lucide-react"
 import { useAuth } from "@/lib/auth-context"
-import { doc, getDoc } from "firebase/firestore"
+import { doc, getDoc, collection, addDoc, query, where, getDocs, deleteDoc, updateDoc } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 
 interface CropBatch {
-    id: number
+    id: string
     cropType: string
     estimatedWeight: string
     harvestDate: string
@@ -53,7 +53,7 @@ export default function DashboardPage() {
 
     // Crop Registration State
     const [showAddCrop, setShowAddCrop] = useState(false)
-    const [editingCropId, setEditingCropId] = useState<number | null>(null)
+    const [editingCropId, setEditingCropId] = useState<string | null>(null)
     const [cropData, setCropData] = useState({
         cropType: "Paddy/Rice",
         estimatedWeight: "",
@@ -63,6 +63,26 @@ export default function DashboardPage() {
         storageType: ""
     })
     const [registeredCrops, setRegisteredCrops] = useState<CropBatch[]>([])
+
+    // Fetch crops from Firestore
+    useEffect(() => {
+        const fetchCrops = async () => {
+            if (user) {
+                try {
+                    const q = query(collection(db, "crops"), where("userId", "==", user.uid))
+                    const querySnapshot = await getDocs(q)
+                    const crops: CropBatch[] = []
+                    querySnapshot.forEach((doc) => {
+                        crops.push({ id: doc.id, ...doc.data() } as CropBatch)
+                    })
+                    setRegisteredCrops(crops)
+                } catch (error) {
+                    console.error("Error fetching crops:", error)
+                }
+            }
+        }
+        fetchCrops()
+    }, [user])
 
     // Bangladesh Divisions and Districts
     const divisions = [
@@ -94,31 +114,43 @@ export default function DashboardPage() {
         { en: "Warehouse", bn: "গুদাম" }
     ]
 
-    const handleCropSubmit = (e: React.FormEvent) => {
+    const handleCropSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (cropData.cropType && cropData.estimatedWeight && cropData.harvestDate &&
-            cropData.division && cropData.district && cropData.storageType) {
+            cropData.division && cropData.district && cropData.storageType && user) {
 
-            if (editingCropId !== null) {
-                // Update existing crop
-                setRegisteredCrops(registeredCrops.map(crop =>
-                    crop.id === editingCropId ? { ...cropData, id: editingCropId } : crop
-                ))
-                setEditingCropId(null)
-            } else {
-                // Add new crop
-                setRegisteredCrops([...registeredCrops, { ...cropData, id: Date.now() }])
+            try {
+                if (editingCropId !== null) {
+                    // Update existing crop
+                    const cropRef = doc(db, "crops", editingCropId)
+                    await updateDoc(cropRef, { ...cropData })
+                    setRegisteredCrops(registeredCrops.map(crop =>
+                        crop.id === editingCropId ? { ...cropData, id: editingCropId } : crop
+                    ))
+                    setEditingCropId(null)
+                } else {
+                    // Add new crop
+                    const docRef = await addDoc(collection(db, "crops"), {
+                        userId: user.uid,
+                        ...cropData,
+                        createdAt: new Date().toISOString()
+                    })
+                    setRegisteredCrops([...registeredCrops, { ...cropData, id: docRef.id }])
+                }
+
+                setCropData({
+                    cropType: "Paddy/Rice",
+                    estimatedWeight: "",
+                    harvestDate: "",
+                    division: "",
+                    district: "",
+                    storageType: ""
+                })
+                setShowAddCrop(false)
+            } catch (error) {
+                console.error("Error saving crop:", error)
+                alert(isEn ? "Failed to save crop" : "ফসল সংরক্ষণ করতে ব্যর্থ হয়েছে")
             }
-
-            setCropData({
-                cropType: "Paddy/Rice",
-                estimatedWeight: "",
-                harvestDate: "",
-                division: "",
-                district: "",
-                storageType: ""
-            })
-            setShowAddCrop(false)
         }
     }
 
@@ -135,9 +167,15 @@ export default function DashboardPage() {
         setShowAddCrop(true)
     }
 
-    const handleDeleteCrop = (cropId: number) => {
+    const handleDeleteCrop = async (cropId: string) => {
         if (confirm(isEn ? "Are you sure you want to delete this crop batch?" : "আপনি কি এই ফসলের ব্যাচ মুছে ফেলতে চান?")) {
-            setRegisteredCrops(registeredCrops.filter(crop => crop.id !== cropId))
+            try {
+                await deleteDoc(doc(db, "crops", cropId))
+                setRegisteredCrops(registeredCrops.filter(crop => crop.id !== cropId))
+            } catch (error) {
+                console.error("Error deleting crop:", error)
+                alert(isEn ? "Failed to delete crop" : "ফসল মুছতে ব্যর্থ হয়েছে")
+            }
         }
     }
 
